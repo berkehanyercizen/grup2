@@ -5,440 +5,175 @@
 ## A.04 Synth Riffs
 ## A.05 Acid Bass
 ## A.06 Musical Minecraft
-
 ## A.07 Bizet Beats
-Minecraft'ı sonic Sonic Pi ile kodlayan fantastik dünyaya yaptığımız kısa geziden sonra tekrar müzikal yapalım. Bugün, kodun müthiş gücünü kullanarak doğruca 21. yüzyıla klasik bir operatif dans parçası getireceğiz.
-## A.7 Çirkin ve Yıkıcı
-1875 yılına dönen zaman makinesine atlayalım. Bizet adında bir besteci en son operası Carmen'i yeni bitirmişti. Ne yazık ki, birçok heyecan verici ve yıkıcı yeni müzik parçası gibi, insanlar başlangıçta hiç beğenmedi çünkü çok çirkin ve farklıydı. Ne yazık ki Bizet, operanın büyük uluslararası başarı kazanmasından on yıl önce öldü ve tüm zamanların en ünlü ve en sık yapılan operalarından biri oldu. Bu trajedi ile sempati duymak için Carmen'in ana temalarından birini ele alalım ve zamanımızdaki çoğu insan için çok çirkin ve farklı olan modern bir müzik biçimine dönüştürelim - canlı kodlanmış müzik!
-
-## A.7 - Habanera'nın Kodunu Çözme
-Kod çalıştırmaya çalışmak tüm opera bu eğitim için biraz zor olacak. Hadi en ünlü bölümlerden biri olan Habanera'ya giden bas çizgisine odaklanalım:
- 
-Henüz müzik notasyonu okumamışsanız, bu size okunaklı görünmeyebilir. Ancak, programcılar olarak müzik gösterimini başka bir kod biçimi olarak görüyoruz - yalnızca bilgisayar yerine bir müzisyenin talimatlarını temsil ediyor. Bu nedenle kod çözmenin bir yolunu bulmamız gerekiyor.
-
-## A.7 - Notalar
-Notalar, bu dergideki kelimeler gibi soldan sağa doğru düzenlenir, ancak farklı yüksekliklere de sahiptir. Skordaki yükseklik notun perdesini gösterir. Skordaki nota arttıkça, notanın adımı da artar.
-Biz zaten Sonic Pi da notanın perdesinin nasıl değiştirileceğini biliyoruz. Biz play 75 ve play 80 gibi yüksek veya düşük numaraları kullanıyoruz. Ya da nota adlarını kullanıyoruz play :E ve play :F. Neyse ki müzikal puanın dikey konumlarının her biri belirli bir nota adını temsil eder. Bu kullanışlı arama masasına bir göz atın:
- 
-## A.7 - Rests
-Müzik notaları, birçok şeyle iletişim kurabilen son derece zengin ve etkileyici bir kod türüdür. Bu nedenle, müzik notalarının yalnızca hangi notaları çalacağınızı değil, aynı zamanda notaları çalamayacağınızı da söyleyebilmesi sürpriz olmamalıdır . Programlamada bu, nil ya da null- bir değerin olmaması fikrine eşdeğerdir . Başka bir deyişle, nota çalmamak notanın olmaması gibidir.
-Eğer skora yakından bakarsanız, gerçekte oyun oynamak için notaları temsil eden siyah noktaların ve diğerlerini temsil eden şeylerin dalgalanmalarının olduğunu göreceksiniz. Neyse ki Sonic Pi'nin dinlenmek için çok kullanışlı bir temsili var: :r yani kaçarsak: play :r aslında sessizlik oynuyor! Ayrıca play :rest, play nil ya play false da bunların hepsini temsil etmenin eşdeğer yolları olarak yazabiliriz .
-
-## A.7 - Ritim
-Son olarak, notasyonda kod çözmeyi öğrenecek son bir şey var: notaların zamanlaması. Orijinal gösterimde notaların kiriş adı verilen kalın çizgilerle bağlantılı olduğunu göreceksiniz. İkinci nota bu kirişlerden ikisine sahiptir, yani atımın 16'sına kadar devam eder. Diğer notaların tek bir ışını vardır, bu da bir vuruşun 8'i için devam ettiği anlamına gelir. Gerisi iki dalgalı kirişe sahiptir, yani aynı zamanda atımın 16'sını temsil eder.
-Yeni şeyleri çözmeye ve keşfetmeye çalıştığımızda çok kullanışlı bir numara, her türlü ilişkiyi veya örüntüyü denemek ve görmek için her şeyi mümkün olduğunca benzer yapmaktır. Örneğin, notasyonumuzu yalnızca 16'lı yıllarda tekrar yazdığımızda, notasyonumuzun sadece güzel bir nota ve dinlenme dizisine dönüştüğünü görebilirsiniz.
- 
-## A.7 - Habanera'yı yeniden kodlamak
-Şimdi bu bas çizgisini Sonic Pi'ye çevirmeye başlayacağız. Hadi bu notları kodlayalım ve bir halkada dinlenelim:
-(ring :d, :r, :r, :a, :f5, :r, :a, :r)
-Bunun neye benzediğini görelim. Canlı bir döngüde atın ve işaretleyin:
-live_loop :habanera do
-  play (ring :d, :r, :r, :a, :f5, :r, :a, :r).tick
-  sleep 0.25
-end
-
-Muhteşem, bu anında tanınabilir riff hoparlörleriniz aracılığıyla canlanır. Buraya gelmek için çok çaba sarf etti, ama buna değdi - beşlik!
-
-## A.7 - Moody Synths
-Şimdi bas hattımız var, hadi ameliyat sahnesinin ambiyansının bir kısmını yeniden yaratalım. Denemek :blade için bir synth, karamsar 80'ler tarzı:d Bir dilimleyici ve yankıdan geçen başlangıç notuyla deneyelim :
-
-live_loop :habanera do
-  use_synth :fm
-  use_transpose -12
-  play (ring :d, :r, :r, :a, :f5, :r, :a, :r).tick
-  sleep 0.25
-end
-
-with_fx :reverb do
-  live_loop :space_light do
-    with_fx :slicer, phase: 0.25 do
-      synth :blade, note: :d, release: 8, cutoff: 100, amp: 2
-    end
-    sleep 8
-  end
-end
-
-Şimdi bas satırındaki diğer notları deneyin: :a ve :f5. Unutmayın, durdurma düğmesine basmanıza gerek yok, sadece müzik çalarken kodu değiştirip tekrar çalıştırmaya başladığınızda kodu değiştirin. Ayrıca, dilimleme makinesi en için farklı değerler deneyin phase: gibi opt 0.5, 0.75ve 1.
-
-## A.7 - Hepsini bir araya getirmek
-Son olarak, şimdiye kadar tüm fikirleri Habanera'nın yeni bir remiksinde birleştirelim. Bas çizgisinin başka bir bölümünü yorum olarak eklediğimi fark edebilirsiniz. Hepsini yeni bir tampon belleğe yazdıktan sonra, kompozisyonu duymak için Çalıştır'ı tıklayın. Şimdi, durmadan, ikinci çizgiyi ve tekrar tekrar koşarak çıkararak rahatsız et# - bu ne kadar muhteşem! Şimdi, etrafını karıştırmaya başla ve eğlen.
-
-use_debug false
-bizet_bass = (ring :d, :r, :r, :a, :f5, :r, :a, :r)
-bizet_bass = (ring :d, :r, :r, :Bb, :g5, :r, :Bb, :r)
-
-with_fx :reverb, room: 1, mix: 0.3 do
-  live_loop :bizet do
-    with_fx :slicer, phase: 0.125 do
-      synth :blade, note: :d4, release: 8,
-        cutoff: 100, amp: 1.5
-    end
-    16.times do
-      tick
-      play bizet_bass.look, release: 0.1
-      play bizet_bass.look - 12, release: 0.3
-      sleep 0.125
-    end
-  end
-end
-
-live_loop :ind do
-  sample :loop_industrial, beat_stretch: 1,
-    cutoff: 100, rate: 1
-  sleep 1
-end
-
-live_loop :drums do
-  sample :bd_haus, cutoff: 110
-  synth :beep, note: 49, attack: 0,
-    release: 0.1
-  sleep 0.5
-end
- 
-## A.8 - Bir Minecraft VJ Olun
- 
-Herkes Minecraft oynadı. Hepiniz inanılmaz yapılar inşa etmiş, kurnaz tuzaklar tasarlamış ve hatta redstone anahtarları tarafından kontrol edilen ayrıntılı araba hatları oluşturmuş olacaksınız. Kaçınız Minecraft ile performans sergilediniz? Profesyonel bir VJ gibi muhteşem görseller oluşturmak için Minecraft'ı kullanabileceğinizi bilmiyorduk.
-Minecraft’i değiştirmenin tek yolu fare ile olsaydı, yeterince hızlı bir şekilde işleri değiştirmek için zor bir zaman geçirirsiniz. Neyse ki sizin için Raspberry Pi, kod ile kontrol edilebilir bir Minecraft sürümü ile birlikte geliyor. Ayrıca, Minecraft'ı sadece kolay değil aynı zamanda inanılmaz derecede eğlenceli hale getiren Sonic Pi adlı bir uygulama ile birlikte geliyor.
-Günümüzün makalesinde, gece kulüplerinde ve dünyadaki müzik mekanlarında performans oluşturmak için kullandığımız bazı ipuçlarını ve püf noktalarını göstereceğiz.
-Başlayalım…
-
-## A.8 - Başlarken
-Temel bilgilerle kendimizi yenilemek için basit bir ısınma egzersiziyle başlayalım. Öncelikle, Raspberry Pi'nizi açıp sonra hem Minecraft hem de Sonic Pi'yi ateşleyin. Minecraft'ta yeni bir dünya yaratın ve Sonic Pi'de yeni bir tampon seçin ve bu koda yazın:
-mc_message "Let's get started..."
-Çalıştır düğmesine basın, mesajı Minecraft penceresinde göreceksiniz. Tamam, başlamaya hazırız, haydi biraz eğlenelim ……
-
-## A.8 - Kum Fırtınaları
-Minecraft'ı görseller oluşturmak için kullanırken hem ilginç görünecek hem de koddan kolayca üretilebilecek şeyler hakkında düşünmeye çalışıyoruz. Güzel bir numara, gökten kum blokları düşürerek bir kum fırtınası yaratmaktır. Bunun için tek ihtiyacımız olan birkaç temel şey:
-•	sleep - eylemler arasına gecikme eklemek için
-•	mc_location - güncel konumumuzu bulmak için
-•	mc_set_block- kum blokları belirli bir yere yerleştirmek için
-•	rrand - bir aralıkta rasgele değerler oluşturmamıza izin vermek için
-•	live_loop - sürekli olarak yağmur kumu yapmamıza izin vermek için
-
-Herhangi bir yerleşik fn'e yabancıysanız rrand, kelimeyi tamponunuza yazmanız yeterlidir, üzerine tıklayın ve sonra Control-i dahili dokümantasyonu getirmek için klavyedeki combo'yu tıklayın . Alternatif olarak, Yardım sistemindeki dil sekmesine gidebilir ve daha sonra yapabileceğiniz diğer heyecan verici şeylerle birlikte doğrudan fns'a bakabilirsiniz.
-Fırtınanın gücünü açığa çıkarmadan önce biraz yağmur yağdıralım. Bulunduğunuz yeri alın ve yakınlardaki gökyüzünde birkaç kum bloğu oluşturmak için kullanın:
-x, y, z = mc_location
-mc_set_block :sand, x, y + 20, z + 5
-sleep 2
-mc_set_block :sand, x, y + 20, z + 6
-sleep 2
-mc_set_block :sand, x, y + 20, z + 7
-sleep 2
-mc_set_block :sand, x, y + 20, z + 8
-
-Çalıştır'a bastığınızda, şu anda hangi yöne baktığınıza bağlı olarak bloklar arkanıza düşmeye başladığından, biraz etrafa bakmanız gerekebilir. Endişelenmeyin, onları kaçırdıysanız, sadece bir kez daha yağmur yağması için tekrar koşun - sadece doğru yola baktığınızdan emin olun!
-Burada neler olduğunu hızla gözden geçirelim. İlk satırda biz fn ile koordinatlar olarak Steve'in yerini kaptı mc_location ve değişkenler içine yerleştirilir x, y ve z. Sonra bir sonraki satırlarda mc_set_block fn'yi Steve ile aynı koordinatlara biraz kum koymak için ama bazı modifikasyonlar için kullandık. Aynı x koordinatını seçtik, ay koordinatı 20 blok daha yüksek ve ardından art arda daha büyük z koordinatları, böylece kum Steve'den uzak bir çizgide düştü.
-Neden bu kodu alıp kendinle oynamaya başlamıyorsun? Uyku süreleri, daha satırları ekleyerek değiştirmeyi deneyin, karıştırma deneyin :sand ile :gravel ve farklı koordinat seçin. Sadece deney yap ve eğlen!
-
-## A.8 – Canlı Döngüler
-Tamam, fırtına gücünü artırma zamanı live_loop- Sonic Pi'nin canlı kodlamanın tüm gücünü açığa çıkaran sihirli yeteneği çalışırken kodunu değiştiriyor!
-
-live_loop :sand_storm do
-  x, y, z = mc_location
-  xd = rrand(-10, 10)
-  zd = rrand(-10, 10)
-  co = rrand(70, 130)
-  synth :cnoise, attack: 0, release: 0.125, cutoff: co
-  mc_set_block :sand, x + xd, y+20, z+zd
-  sleep 0.125
-end
-
-Ne komik! Oldukça hızlı bir şekilde dönüyoruz (saniyede 8 kez) ve her döngüde Steve'in yerini daha önce olduğu gibi buluyoruz ama sonra 3 rastgele değer üretiyoruz:
-•	xd - fark x için -10 ile 10 arasında olacak
-•	zd - fark z için de -10 ile 10 arasında olacak
-•	co - Düşük geçiş filtresi için 70 ile 130 arasında bir kesme değeri
-
-Daha sonra bu rasgele değerleri fns'de kullanıyoruz synth ve mc_set_block bize Steve etrafındaki rasgele yerlere düşen kum ve synth'den gelen şiddetli yağmur benzeri bir ses veriyoruz :cnoise.
-Canlı döngülere yeni başlayanlar için - bu gerçekten eğlencenin Sonic Pi ile başladığı yer. Kod çalışırken ve kum aşağı doğru akarken, değerlerden birini, belki uyku saatini 0.25 veya :sandblok tipini değiştirmeyi deneyin :gravel. Şimdi tekrar koşmaya başla . Hey! Çabuk! Kod durmadan işler değişti. Bu, gerçek bir VJ gibi performans gösteren geçidiniz. Pratik yapmaya ve çevresinde bir şeyler değiştirmeye devam edin. Kodu durdurmadan görselleri ne kadar farklı yapabilirsiniz?
-
-## A.8 - Epik Blok Kalıpları
- 
-Son olarak, ilginç görseller üretmenin başka bir harika yolu, yaklaşmak ve yaklaşmak için büyük desenli duvarlar oluşturmaktır. Bu etki için blokları rastgele yerleştirmekten, sıralı bir şekilde yerleştirmeye geçmemiz gerekir. Bunu, iki yineleme kümesini iç içe geçirerek yapabiliriz (Yardım düğmesine basın ve yineleme hakkında daha fazla bilgi için “Yineleme ve Döngüler” dersinin 5.2 bölümüne bakın). Yaptıktan |xd| sonra komik xd olan, yinelemenin her değeri için ayarlanacağı anlamına gelir. Bu yüzden ilk defa 0, sonra 1, sonra 2… vb. Olacak. İki lot yinelemeyi bu şekilde bir araya getirerek, bir kare için tüm koordinatları oluşturabiliriz. Daha sonra ilginç bir etki için blok halkalarından blok türlerini rastgele seçebiliriz:
-
-x, y, z = mc_location
-bs = (ring :gold, :diamond, :glass)
-10.times do |xd|
-  10.times do |yd|
-    mc_set_block bs.choose, x + xd, y + yd, z
-  end
-end
-
-Oldukça temiz. Burada eğleniyor iken bs.choose u bs.tick e değiştirmeyi deneyin. Blok tiplerini değiştirmeyi deneyin ve daha maceracılarınız live_loop, kalıpları otomatik olarak değişmeye devam edecek şekilde yapışmayı deneyebilirsiniz.
-Şimdi, VJ finali için - ikisini 10.times değiştirin 100.times ve Run'a basın. Kabooom Rasgele yerleştirilmiş tuğlaların devasa devasa duvarı. Bunu farenizle manuel olarak yapmanın ne kadar süreceğini hayal edin! Sinek moduna girmek ve bazı harika görsel efektler için çekmeye başlamak için alana iki kez dokunun. Yine de burada durmayın - bazı harika fikirleri bir araya getirmek için hayal gücünüzü kullanın ve ardından Sonic Pi'nin kodlama gücünü kullanın. Yeterince pratik yaptığınız zaman ışıkları kısın ve arkadaşlarınız için bir VJ şovu hazırlayın!
- 
+## A.08 Become a Minecraft VJ
 ## A.09 Randomisation
-
-Bu eğitici serinin 4. bölümünde, biraz cızırtılı synth riffleri kodlarken rastgeleleştirmeye kısa bir göz attık. Randomizasyonun canlı kodlama DJ setlerimin bu kadar önemli bir parçası olduğu göz önüne alındığında, temelleri çok daha ayrıntılı bir şekilde ele almanın faydalı olacağını düşündüm. Öyleyse, şanslı şapkanı tak ve biraz rasgele akıntıya gir!
-
-## A.9 – Burada rastgele yok
-Sonic Pi'nin randomizasyon fonksiyonları ile oynadığınızda sizi gerçekten şaşırtabilecek şeyleri öğrenecek ilk şey, gerçekten rastgele olmadıklarıdır. Bu aslında ne anlama geliyor? Peki, birkaç test deneyelim. Önce, kafanda 0 ile 1 arasında bir sayı hayal et. Orada kal ve bana söyleme. Şimdi tahmin edeyim ... öyleydi 0.321567? Yok hayır? Bak, açıkça bu konuda iyi değilim. Bir tane daha gideyim, ama Sonic Pi'den bu sefer bir numara seçmesini isteyelim. Sonic Pi v2.7 + 'yı ateşleyin ve rastgele bir numara isteyin ancak bir daha söyleme:
-print rand
-Şimdi ortaya çıkarmak için… öyle 0.75006103515625mi? Evet! Ha, biraz şüpheci olduğunu görebiliyorum. Belki de sadece şanslı bir tahmindi. Tekrar deneyelim. Çalıştır düğmesine tekrar basın ve ne aldığımızı görün… Ne? 0.75006103515625tekrar? Bu açıkça rastgele olamaz! Haklısın, değil.
-Burada neler oluyor? Buradaki süslü bilgisayar bilimi kelimesi determinizmdir. Bu sadece hiçbir şeyin tesadüfen olmadığı ve her şeyin olması gerektiği anlamına gelir. Sonic Pi versiyonunuz daima 0.75006103515625yukarıdaki programa geri dönmeye mahkumdur. Bu oldukça işe yaramaz gelebilir, ancak sizi Sonic Pi'nin en güçlü parçalarından biri olduğuna dair temin ederim. Eğer buna sadık kalırsanız, Sonic Pi'nin randomizasyonunun deterministik doğasına, besteleriniz ve canlı kodlu DJ setleriniz için temel bir yapı taşı olarak nasıl güveneceğinizi öğreneceksiniz.
-
-## A.9 - Rastgele Melodi
-Sonic Pi önyükleme yaptığında aslında belleğe 441.000 önceden oluşturulmuş rastgele değerler dizisi yükler. Rand veya gibi rasgele bir işlev çağırdığınızda rrand, bu rasgele akış sonucunuzu üretmek için kullanılır. Rastgele bir işleve yapılan her çağrı, bu akıştan bir değer tüketir. Bu nedenle, rastgele bir işlev için 10. çağrı akıştaki 10. değeri kullanacaktır. Ayrıca, Çalıştır düğmesine her basışınızda, akış o çalışma için sıfırlanır. Bu yüzden sonucu tahmin edebildim rand ve 'rastgele' melodiinin neden her zaman aynı olduğunu belirleyebildim. Herkesin Sonic Pi sürümü, parçalarımızı birbirimizle paylaşmaya başladığımızda çok önemli olan aynı rastgele akışı kullanıyor.
-Bu bilgiyi tekrarlanabilir bir rasgele melodi üretmek için kullanalım:
-8.times do
- play rrand_i(50, 95)
- sleep 0.125
-end
-
-Bunu boş bir ara belleğe yazın ve Çalıştır düğmesine basın. 50 ile 95 arasında 'rasgele' notalardan oluşan bir melodi duyacaksınız. Tamamlandığında, aynı melodiyi tekrar dinlemek için tekrar Çalıştır'a basın.
-### Handy Randomisation İşlevleri
-Sonic Pi, rastgele akımla çalışmak için çeşitli faydalı işlevler sunar. İşte en yararlı bazılarının bir listesi:
--	rand - Basitçe rastgele akışta bir sonraki değeri döndürür
--	rrand - Bir aralıktaki rastgele bir değeri döndürür
--	rrand_i - Bir aralıktaki rastgele bir tam sayıyı döndürür
--	one_in - Verilen olasılıkla doğru veya yanlış döndürür
--	dice - Zar atmayı taklit eder ve 1 ile 6 arasında bir değer verir
--	choose - Listeden rastgele bir değer seçer
-Ayrıntılı bilgi ve örnekler için Yardım sistemindeki belgelerine bakın.
-
-## A.9 - Akışı Sıfırlama
-Seçilen notaların bir dizisini tekrarlama kabiliyeti, dans pistinde bir riff oynatmanıza izin vermek için şart olsa da tam olarak istediğiniz riff olmayabilir. Bir dizi farklı riff deneyebilir ve en sevdiğimizi seçebilirsek harika olmaz mıydı? Gerçek sihrin başladığı yer burasıdır.
-Akışı fn ile manuel olarak ayarlayabiliriz use_random_seed. Computer Science'ta rastgele bir tohum, yeni bir rastgele değerler akışının filizlenebileceği ve çiçek açabileceği başlangıç noktasıdır. Hadi deneyelim:
-use_random_seed 0
-3.times do
-  play rrand_i(50, 95)
-  sleep 0.125
-end
-
-Harika, yukarıdaki rastgele melodinin ilk üç notları almak: 84, 83ve 71. Ancak artık tohumu başka bir şeyle değiştirebiliriz. Buna ne dersin:
-
-use_random_seed 1
-3.times do
-  play rrand_i(50, 95)
-  sleep 0.125
-end
-
-İlginç, biz olsun 83, 71ve 61. Buradaki ilk iki sayının önceki son iki sayıyla aynı olduğunu fark edebilirsiniz - bu bir tesadüf değil.
-Unutmayın ki rastgele akış, yalnızca 'önceden alınmış' değerlerin dev bir listesidir. Rasgele bir tohum kullanmak bizi sadece o listedeki bir noktaya atlar. Bunu düşünmenin bir başka yolu da karıştırılmış kartlardan oluşan büyük bir desteyi hayal etmek. Rasgele bir tohum kullanmak, güverteyi belirli bir noktada kesmektir. Bunun muhteşem kısmı, müzik yaparken bize büyük güç veren rastgele akımın etrafında atlamak için tam da bu yeteneğin olmasıdır.
-Bu yeni dere sıfırlama gücü ile 8 notadaki rastgele melodimizi tekrar gözden geçirelim, ama aynı zamanda canlı bir döngüye geçelim;
-live_loop :random_riff do
-  use_random_seed 0
-  8.times do
-    play rrand_i(50, 95), release: 0.1
-    sleep 0.125
-  end
-end
-
-Şimdi, hala çalarken, tohum değerini 0 başka bir şeyle değiştirin. Dene 100, ne olmuş 999. Kendi değerlerinizi deneyin, deneyin ve oynayın - hangi tohumun en sevdiğiniz riff'i ürettiğini görün.
-
-## A.9 - Hepsini bir araya getirmek
-
-Bu ayki eğitici bilgiler Sonic Pi'nin randomizasyon işlevselliğinin çalışmalarına oldukça teknik bir dalış oldu. Umarım, nasıl çalıştığı ve müziğinizde tekrarlanabilir kalıplar oluşturmak için randomizasyonu nasıl güvenilir bir şekilde kullanmaya başlayabileceğinize dair bir fikir vermiştir. İstediğiniz her yerde tekrarlanabilir randomizasyon kullanabileceğinizi vurgulamak önemlidir. Örneğin, notların genliğini, ritmin zamanlamasını, reverb miktarını, mevcut sentezi, bir FX'in karışımını vb. Rasgele ayarlayabilirsiniz. Gelecekte bunlardan bazılarına yakından bakacağız. Başvurular, ancak şimdilik sizi kısa bir örnekle bırakmama izin verin.
-Aşağıdakileri boş bir ara belleğe yazın, Çalıştır'a basın ve ardından tohumları değiştirmeye başlayın, tekrar Çalıştır'a (hala çalınırken) vurun ve yapabileceğiniz farklı sesleri, ritimleri ve melodileri keşfedin. Güzel bir tane bulduğunuzda, tohum numarasını hatırlayın, böylece geri dönebilirsiniz. Sonunda, hoşunuza giden birkaç tohum bulduğunuzda, tam bir parça oluşturmak için sevdiğiniz tohumlar arasında geçiş yaparak arkadaşlarınız için canlı kodlanmış bir performans sergileyin.
-live_loop :random_riff do
-  use_random_seed 10300
-  use_synth :prophet
-  s = [0.125, 0.25, 0.5].choose
-  8.times do
-    r = [0.125, 0.25, 1, 2].choose
-    n = (scale :e3, :minor).choose
-    co = rrand(30, 100)
-    play n, release: r, cutoff: co
-    sleep s
-  end
-end
-
-live_loop :drums do
-  use_random_seed 2001
-  16.times do
-    r = rrand(0.5, 10)
-    sample :drum_bass_hard, rate: r, amp: rand
-    sleep 0.125
-  end
-end
 ## A.10 Control
-## A.10 - Sesinizi Kontrol Etme
-Şimdiye kadar bu dizi sırasında sesleri tetiklemeye odaklandık. Sonic Pi’de yerleşik olan birçok sentezi play veya synth ile önceden kaydedilmiş örnekleri nasıl tetikleyeceğimizi keşfettik sample. Ayrıca, bu tetiklenen sesleri, with_fx komut kullanarak yankı ve çarpıtma gibi stüdyo FX içine nasıl sardığımızı da inceledik. Bunu Sonic Pi'nin inanılmaz derecede hassas zamanlama sistemi ile birleştirin ve çok çeşitli sesler, ritimler ve riffler üretebilirsiniz. Ancak, belirli bir sesin seçeneklerini dikkatlice seçtiğiniz ve tetikledikten sonra, doğru çalarken onunla uğraşmak mümkün değil mi? Yanlış! Bugün çok güçlü bir şey öğreneceksiniz - çalışan synth nasıl kontrol edilir.
-
-### Temel Bir Ses
-Güzel, basit bir ses yaratalım. Sonic Pi'yi kapatın ve yeni bir tamponda aşağıdakileri yazın:
-synth :prophet, note: :e1, release: 8, cutoff: 100
-
-Şimdi güzel bir gürleyen synth sesi duymak için sol üstteki Çalıştır düğmesine basın. Devam edin, hissetmek için birkaç kez tekrar basın. Tamam yapıldı? Kontrol etmeye başlayalım!
-
-### Synth Düğümleri
-
-Sonic Pi Biraz bilinen özelliği FNS olmasıdır play, synth ve sample, dönüş şey denen SynthNode bir koşu sesi temsil eder. Bunlardan birini SynthNode standart bir değişken kullanarak yakalayabilir ve daha sonra daha sonra kontrol edebilirsiniz . Örneğin, cutoff:1 vuruştan sonra opt'in değerini değiştirelim :
-sn = synth :prophet, note: :e1, release: 8, cutoff: 100
-sleep 1
-control sn, cutoff: 130
-Sırayla her satıra bakalım:
-İlk önce :prophet fn'yi synth normal olarak kullanarak synth'i tetikleriz . Bununla birlikte sonucu ayrıca bir değişkende yakaladık sn. Bu değişkeni tamamen farklı bir şey olarak adlandırmış olabilirdik synth_node ya da jane- isim önemli değil. Ancak, performanslarınız ve kodunuzu okuyan insanlar için sizin için anlamlı bir ad seçmek önemlidir. Sn Synth düğümü için güzel bir kısa hatırlatıcı olarak seçtim .
-2. satırda standart bir sleep komutumuz var. Bu özel bir şey yapmaz - bilgisayardan bir sonraki satıra geçmeden önce 1 atım beklemesini ister.
-Satır 3, kontrol eğlencesinin başladığı yerdir. Burada, controlfn kullanarak koşu SynthNode değerimizi kesme değerini değiştirmesini söyleriz 130. Eğer vurursanız Çalıştır butonuna, siz duyarsınız :prophet önceki gibi synth başlangıç oynamaya, ancak 1 vuruştan sonra daha parlak bir ses çıkarır.
- 
-Ayarlanabilir Seçenekler
-Sonic Pi'nin synth ve FX tercihlerinin çoğu tetiklendikten sonra değiştirilebilir. Ancak, hepsi için durum böyle değil. Örneğin, kaplama seçmesidir attack:, decay:, sustain: ve release: Synth tetiklerken sadece ayarlanabilir. Hangi seçeneklerin değiştirilebileceğini ve değiştirilemeyeceğini bulmak basittir - verilen bir synth veya FX belgesine gidin ve kişisel seçenek belgesine gidin ve "Oynarken değiştirilebilir" veya "Yapılamaz" ifadelerini arayın ayarlandıktan sonra değiştirilebilir ”. Örneğin, :beep synth’in tercihine ilişkin belgeler attack:, değiştirilmesinin mümkün olmadığını açıkça ortaya koyuyor:
--	Varsayılan: 0
--Sıfır veya daha büyük olmalı
--	Ayarlandıktan sonra değiştirilemez
--	Mevcut BPM değeri ile ölçeklendirildi
-
-### Birden Çok Değişiklik
-Bir synth çalışırken, yalnızca bir kez değiştirmekle sınırlı kalmazsınız -istediğiniz kadar değiştirmek için özgürsünüz. Örneğin :prophet, aşağıdakileri içeren mini bir arpejatöre dönüştürebiliriz:
-notes = (scale :e3, :minor_pentatonic)
-sn = synth :prophet, note: :e1, release: 8, cutoff: 100
-sleep 1
-16.times do
-  control sn, note: notes.tick
-  sleep 0.125
-end
-
-Bu kod snippet'inde az önce birkaç şey daha ekledik. Öncelikle notes, içinde dolaşmak istediğimiz notları içeren yeni bir değişken tanımladık (bir arpejör, sırayla bir not listesinde dolaşan bir şey için sadece süslü bir isimdir). İkincisi, tek aramamızı control 16 kez yinelemeyle değiştirdik. Her aramada control biz .tick bizim halkanın içinden bir notes biz sonuna (Sonic Pi'nin halkalarının muhteşem gücü sayesinde) bir kez hangi otomatik tekrar edecektir. Çeşitli biraz İçin değiştirmeyi deneyin .tick ile .choose ve farkı duymak görmek.
-Birden fazla seçeneği aynı anda değiştirebileceğimizi unutmayın. Kontrol çizgisini aşağıdakine değiştirmeyi deneyin ve farkı dinleyin:
-control sn, note: notes.tick, cutoff: rrand(70, 130)
-
-### Kayma
-
-A kontrol ettiğimizde SynthNode, tam zamanında yanıt verir ve anında bir düğmeye basmış ya da değişiklik isteyen bir düğmeye basmış gibi tercihinizi anında yenisiyle değiştirir. Bu ritmik ve vurmalı gelebilir - özellikle opt tınıların bir yönünü kontrol ederse cutoff:. Ancak, bazen değişimin anında gerçekleşmesini istemezsiniz. Bunun yerine, bir kaydırıcıyı veya kadranı oynatmışsınız gibi geçerli değerden yenisine sorunsuzca geçmek isteyebilirsiniz. Tabii ki, Sonic Pi bunu da _slide: tercihlerini kullanarak yapabilir.
-Değiştirilebilecek her tercih, aynı zamanda _slide: bir slayt süresi belirlemenizi sağlayan özel bir ilgili seçeneğe de sahiptir . Örneğin, amp: vardır amp_slide:ve cutoff:vardır cutoff_slide:. Bu slayt seçenekleri, bir sonraki kontroller sırasında nasıl davranacaklarını bildirdikleri için diğer tüm seçeneklerden biraz daha farklı çalışır. Hadi bir bakalım:
-sn = synth :prophet, note: :e1, release: 8, cutoff: 70, cutoff_slide: 2
-sleep 1
-control sn, cutoff: 130
-
-Bu örneğin, eklenmesi dışında eskisi ile aynı olduğuna dikkat edin cutoff_slide:. Bu, bir dahaki sefere bu synth'in cutoff: kontrolünü ele geçirdiğinde, mevcut değerden yenisine geçmek için 2 vuruş alacağını söylüyor. Bu nedenle, kullandığımız control zaman kesme slaydı 70'den 130'a kadar olan sesleri duyabilirsiniz. Sese ilginç, dinamik bir his verir. Şimdi, cutoff_slide: sesi nasıl değiştirdiğini görmek için zamanı 0,5 gibi kısa bir değere veya 4 gibi daha uzun bir değere değiştirmeyi deneyin. Unutmayın, değiştirilebilir seçeneklerden herhangi birini tam olarak bu şekilde kaydırabilirsiniz ve her _slide: değer tamamen farklı olabilir, böylece kesimin yavaşça kaymasını, ampin hızlı kaymasını ve tava arasında istediğiniz yerde kaymasını sağlayabilirsiniz ...
-
-### Hepsini bir araya getirmek
-Haydi, tetiklendikten sonra synthleri kontrol etmenin gücünü gösteren kısa bir örneğe bakalım. Biraz farklı bir sözdizimine rağmen FX'i de tıpkı synth gibi kaydırabileceğinize dikkat edin. FX kontrolü hakkında daha fazla bilgi için yerleşik eğitimin 7.2 bölümüne bakın.
-Kodu yedek bir belleğe kopyalayın ve dinleyin. Yine de orada bitmiyor- kodla oynayın. Slayt sürelerini değiştirin, notları, synth, FX ve uyku zamanlarını değiştirin ve tamamen farklı bir şeye dönüştürüp çeviremeyeceğinizi görün!
-live_loop :moon_rise do
-  with_fx :echo, mix: 0, mix_slide: 8 do |fx|
-    control fx, mix: 1
-    notes = (scale :e3, :minor_pentatonic, num_octaves: 2).shuffle
-    sn = synth :prophet , sustain: 8, note: :e1, cutoff: 70, cutoff_slide: 8
-    control sn, cutoff: 130
-    sleep 2
-    32.times do
-      control sn, note: notes.tick, pan: rrand(-1, 1)
-      sleep 0.125
-    end
-  end
-end
- 
 ## A.11 Tick Tock
-## A.11 - Atışı İzleme
-Bu seride geçen ay, Sonic Pi'nin temelini oluşturan randomizasyon sistemine derin bir teknik dalış yaptık. Kodumuz üzerinde belirleyici olarak yeni dinamik kontrol seviyeleri eklemek için bunu nasıl kullanabileceğimizi araştırdık. Bu ay teknik dalışa devam edeceğiz ve dikkatimizi Sonic Pi'nin benzersiz kene sistemine çevireceğiz. Bu makalenin sonunda, ritimler arasında yolunuzu geçiyor olacak ve canlı bir kodlayıcı DJ olma yolunda ilerleyeceksiniz.
-
-## A.11 - Beat Sayımı
-Müzik yaparken sıklıkla hangi ritmin olduğuna bağlı olarak farklı bir şey yapmak istiyoruz. Sonic Pi, bir tick ritmin gerçekten gerçekleştiği zaman size kesin kontrol sağlamanız ve hatta kendi temposuyla birden fazla ritmi desteklemeniz için adlandırılan özel bir ritme sayma sistemine sahiptir.
-Bir oyun yapalım- aramamız gereken ritmi ilerletmek için tick. Yeni bir tampon açın, aşağıdakini yazın ve Çalıştır'a basın:
-puts tick #=> 0
-
-Bu akım yendi döndürür: 0. Çalıştır düğmesine birkaç kez bassanız bile, her zaman geri döneceğine dikkat edin 0. Bunun nedeni, her koşunun 0'dan itibaren sayılarıyla yeni bir vuruş başlatmasıdır. Ancak, koşu hala aktifken, atımı istediğimiz kadar ilerletebiliriz:
-
-puts tick #=> 0
-puts tick #=> 1
-puts tick #=> 2
-
-Bir #=> kod satırının sonunda sembolü gördüğünüzde, bu satır metni sağ tarafa kaydedecektir. Örneğin puts foo #=> 0, kod programdaki o noktadaki günlüğe puts foo yazdırıyor demektir 0.
-
-## A.11 - Vuruşu Kontrol Etme
-Bunun tick iki şey yaptığını gördük. Artar (bir tane ekler) ve mevcut atımı döndürür. Bazen şu anki ritmi, üzerinden yapabileceğimizi arttırmak zorunda kalmadan bakmak istiyoruz look:
-
-puts tick #=> 0
-puts tick #=> 1
-puts look #=> 1
-puts look #=> 1
-Bu kodda, ritmi iki kez işaretledikten sonra look iki kere çağırıyoruz . Biz günlüğüne aşağıdaki değerleri görürsünüz: 0, 1, 1, 1. İlk iki ticks 0 sonra 1 beklendiği gibi geri döndü, sonra iki looks sadece iki kez son atım değerini döndürdü 1.
-
-## A.11 - Yüzükler
-Şimdi ritmi ilerletebilir ve ritmi tick kontrol edebiliriz look. Sıradaki ne? Geçecek bir şeye ihtiyacımız var. Sonic Pi, riffleri, melodileri ve ritimleri temsil etmek için halkalar kullanır ve kene sistemi özellikle onlarla yakın çalışmak üzere tasarlanmıştır. Aslında, halkaların kendi nokta sürümleri vardır tick ki bunlar iki şey yapar. İlk olarak, düzenli bir kene gibi davranır ve atışı artırır. İkincisi, atımı indeks olarak kullanarak halka değerini arar. Hadi bir bakalım:
-puts (ring :a, :b, :c).tick #=> :a
-
-.ticktick halkanın ilk değerini döndürecek özel bir nokta sürümüdür :a. Ringdeki değerlerin her birini .tickbirden çok kez arayarak alabiliriz :
-
-puts (ring :a, :b, :c).tick #=> :a
-puts (ring :a, :b, :c).tick #=> :b
-puts (ring :a, :b, :c).tick #=> :c
-puts (ring :a, :b, :c).tick #=> :a
-puts look                   #=> 3
- 
-Günlüğüne bir göz atın ve göreceksiniz :a, :b, :cdaha sonra ve :a yine. Dikkat edin look döner 3. Aramalar için .tick için düzenli aramalar gibi hareket tick yerel ritmi artırmaz -.
-## A.11 - Bir Canlı Döngü Arpejörü
-
-Tick Halkalar ve s'lerle karıştırdığınızda gerçek güç gelir live_loop. Birleştirildiğinde, basit bir arpejörü oluşturmak ve anlamak için gereken tüm araçlara sahibiz. Sadece dört şeye ihtiyacımız var:
--1.	Döndürmek istediğimiz notları içeren bir yüzük.
--2.	Ritmi arttırma ve elde etme aracı.
--3.	Geçerli ritmi dayalı bir nota çalma yeteneği.
--4.	Arpejatörün tekrar etmesini sağlayan bir ilmek yapısı.
-Bu kavramların tümü aşağıdaki kodda bulunabilir:
-notes = (ring 57, 62, 55, 59, 64)
-
-live_loop :arp do
-  use_synth :dpulse
-  play notes.tick, release: 0.2
-  sleep 0.125
-end
-
-Bu çizgilerin her birine bakalım. Öncelikle, sürekli çalacağımız notalarımızı tanımlarız. Daha sonra bizim için yuvarlak olan bir live_loop çağrı yarattık :arp. Her seferinde live_loop synth'i ayarlıyoruz :dpulse ve sonra ringimizi kullanarak bir sonraki notayı çalıyoruz .tick. Bunun, atım sayacımızı artıracağını ve en son atım değerini bir not olarak kullanacağımızı unutmayın. Sonunda, tekrar döngü yapmadan önce sekizinci atışı bekleriz.
-## A.11 - Birden Çok Eşzamanlı Atım
-Bilmeniz gereken gerçekten önemli bir şey, bunun tick yerel olması live_loop. Bu, her live_loop birinin kendi bağımsız vuruş sayacına sahip olduğu anlamına gelir. Bu, küresel bir metronom ve dövmeden çok daha güçlü. Buna şu anda bakalım:
-
-notes = (ring 57, 62, 55, 59, 64)
-
-with_fx :reverb do
-  live_loop :arp do
-    use_synth :dpulse
-    play notes.tick + 12, release: 0.1
-    sleep 0.125
-  end
-end
-
-live_loop :arp2 do
-  use_synth :dsaw
-  play notes.tick - 12, release: 0.2
-  sleep 0.75
-end
-## A.11 - Çatışma Vuruşları
-
-Sonic Pi'nin kene sistemi ile ilgili kafa karışıklığının büyük bir nedeni, insanların aynı anda birden fazla halkayı tıkamak istedikleri zaman live_loop:
-
-use_bpm 300
-use_synth :blade
-live_loop :foo do
-  play (ring :e1, :e2, :e3).tick
-  play (scale :e3, :minor_pentatonic).tick
-  sleep 1
-end
-
-Her birinin live_loop kendi bağımsız vuruş sayacı olmasına rağmen .tick, aynı şey için iki kez çağırıyoruz live_loop. Bu, atımın her seferinde iki kez artırılacağı anlamına gelir. Bu, bazı ilginç polidimler üretebilir ancak genellikle istediğiniz şey değildir. Bu sorunun iki çözümü var. Bir seçenek, tick başlangıcında elle arama yapmak live_loop ve ardından .look her birindeki geçerli ritmi aramak için kullanmaktır live_loop. İkinci çözelti, her çağrı için benzersiz ismi geçmektir .tickgibi .tick(:foo). Sonic Pi daha sonra kullandığınız her bir kene için ayrı bir vuruş sayacı oluşturacak ve izleyecektir. Böylece ihtiyaç duyduğunuz kadar atımla çalışabilirsiniz! Daha fazla bilgi için yerleşik eğitimin 9.4'ünde işaretli keneler bölümüne bakınız.
-
-## A.11 - Hepsini bir araya getirmek
-Tüm bu ticks, rings ve live_loops bilgilerini nihai eğlenceli bir örnek için bir araya getirelim. Her zamanki gibi, buna bitmiş bir parça olarak bakma. Bir şeyleri değiştirmeye başlayın ve onunla oynamaya başlayın ve onu neye dönüştürebileceğinizi görün. Bir dahaki sefere görüşürüz…
-use_bpm 240
-notes = (scale :e3, :minor_pentatonic).shuffle
-
-live_loop :foo do
-  use_synth :blade
-  with_fx :reverb, reps: 8, room: 1 do
-    tick
-    co = (line 70, 130, steps: 32).tick(:cutoff)
-    play (octs :e3, 3).look, cutoff: co, amp: 2
-    play notes.look, amp: 4
-    sleep 1
-  end
-end
-
-live_loop :bar do
-  tick
-  sample :bd_ada if (spread 1, 4).look
-  use_synth :tb303
-  co = (line 70, 130, steps: 16).look
-  r = (line 0.1, 0.5, steps: 64).mirror.look
-  play notes.look, release: r, cutoff: co
-  sleep 0.5
-end
-
-
 ## A.12 Sample Slicing
 ## A.13 Code a Probabilistic Sequencer
 ## A.14 Amplitude Modulation
 ## A.15 Five Live Coding Techniques
+***Beş Canlı Kodlama Tekniği***
+Bu ayki Sonic Pi eğitiminde, Sonic Pi'ye gerçek bir enstrüman gibi nasıl davranmaya başlayacağınıza bir göz atacağız. Bu nedenle, kodu tamamen farklı bir şekilde düşünmeye başlamamız gerekir. Canlı kodlayıcılar, kodu kemancıların yaylarını nasıl düşündüklerine benzer şekilde düşünür. Aslında, aynı kemancı gibi, farklı sesler (uzun yavaş hareketler ve kısa hızlı vuruşlar) oluşturmak için çeşitli yay tekniklerini uygulayabilir, Sonic Pi'nin sunduğu temel canlı kodlama tekniklerinden beşini keşfedeceğiz. Bu makalenin sonunda, kendi canlı kodlanmış performanslarınız için pratik yapmaya başlayabilirsiniz.
+**1. Kısa Yolları Ezberlemek**
+Sonic Pi ile kodlamayı yaşayan ilk ipucu kısayolları kullanmaya başlamaktır. Örneğin, fareye ulaşmak için değerli zamanınızı boşa harcamak, Çalıştır düğmesine taşımak ve tıklamak yerine, yalnızca alt ve r tuşlarına aynı anda basabilirsiniz; bu daha hızlıdır ve klavyede parmaklarınızı bir sonraki düzenlemeye hazır tutar. . Üstteki ana düğmelerin kısayollarını, fareyi üzerlerine getirerek bulabilirsiniz. Kısayolların tam listesi için yerleşik öğretici bölüm 10.2'ye bakın.
+Gerçekleştirirken, yapılacak eğlenceli bir şey, kısayollara basarken kol hareketinize biraz yetenek katmaktır. Örneğin, bir değişiklik yapmak üzereyken izleyiciyle iletişim kurmak çoğu zaman iyidir - bu nedenle büyük bir güç akoruna çarptığında yaptığınız gibi bir gitaristin üstüne vurduğunuzda hareketlerinizi süsleyin.
+**2. Seslerinizi Manuel Olarak Tetikleyin**
+Artık klavyeyle anında kodu tetikleyebilirsiniz, bu beceriyi seslerinizi elle katmanlamak olan ikinci tekniğimiz için hemen uygulayabilirsiniz. Oynamak için çok sayıda çağrı kullanmak ve uykuyla yapılan çağrılarla ayrılmış örnekleri kullanmak yerine, alt-r komutunu kullanarak manuel olarak tetikleyeceğimiz bir çağrı yapacağız. Hadi deneyelim. Aşağıdaki kodu yeni bir belleğe yazın:
+
+'''
+synth :tb303, note: :e2 - 0, release: 12, cutoff: 90
+'''
+Şimdi, Çalıştır tuşuna basın ve ses çalarken, dört notayı aşağıya doğru değiştirerek bırakmak için kodu değiştirin:
+'''
+synth :tb303, note: :e2 - 4, release: 12, cutoff: 90
+'''
+Şimdi, her iki sesin de aynı anda çalındığını duymak için Yeniden Çalıştır düğmesine basın. Bunun nedeni, Sonic Pi’nin Çalıştır düğmesinin önceki bir kodun bitmesini beklememesi, ancak aynı anda çalışan kodu başlatmasıdır. Bu, her tetikleyici arasında küçük veya büyük değişikliklerle çok sayıda sesi kolayca katmanlaştırabileceğiniz anlamına gelir. Örneğin, hem notu hem de kesmeyi değiştirmeyi deneyin: opts ve ardından yeniden tetikleyin.
+Bu tekniği uzun soyut örneklerle de deneyebilirsiniz. Örneğin:
+'''
+sample :ambi_lunar_land, rate: 1 
+'''
+Örneği başlatmayı deneyin ve ardından aşamalı olarak oranı yarıya indirin: Vuruş arasında koşmayı deneyin 1'den 0.5'e 0.25'den 0.125'e koşun ve sonra -0.5 gibi bazı negatif değerleri deneyin. Sesleri bir araya getirin ve nereye götürebileceğinizi görün. Son olarak, biraz FX eklemeyi deneyin.
+Bu şekilde basit kod satırlarıyla çalışmak, Sonic Pi'ye yeni gelen bir izleyicinin, yaptığınız şeyi takip etme ve duydukları seslerle okuyabilecekleri kodla ilişkilendirme konusunda iyi bir şansı olduğu anlamına gelir.
+**3. Master Canlı Döngüler** 
+Daha ritmik bir müzikle çalışırken, her şeyi elle tetiklemek ve iyi zaman geçirmek çoğu zaman zor olabilir. Bunun yerine, bir live_loop kullanmak genellikle daha iyidir. Bu, kodunuz için tekrarlama sağlarken, bir sonraki döngüde kodu düzenleme olanağı sağlar. Ayrıca diğer live_loops'lar ile aynı anda çalışacaklar, bu da onları birbirleriyle ve manüel kod tetikleyicilerle birlikte katmanlandırabileceğiniz anlamına gelir. Canlı döngülerle çalışma hakkında daha fazla bilgi için yerleşik eğitimin 9.2 bölümüne bakın.
+Gerçekleştirirken, live_loop’un senkronizasyonundan yararlanmayı unutmayın: bir hata nedeniyle canlı döngünün çalışmasını durduran yanlışlıkla çalışma zamanı hatalarından kurtulmanızı sağlar. Senkronizasyona zaten sahipseniz: geçerli bir başka live_loop'a işaret etmeyi seçtiyseniz, hatayı hızlı bir şekilde düzeltebilir ve bir ritmi kaçırmadan işleri yeniden başlatmak için kodu yeniden çalıştırabilirsiniz.
+**4. Master Mikserini kullanın**
+Sonic Pi’nin en iyi saklanan sırlarından biri, içinden tüm seslerin aktığı bir ana miksere sahip olmasıdır. Bu mikser, hem düşük geçişli bir filtreye hem de yüksek geçişli bir filtreye sahiptir, böylece seste kolayca genel değişiklikler yapabilirsiniz. Master mikserin işlevselliğine fn set_mixer_control! Aracılığıyla erişilebilir. Örneğin, bazı kodlar çalışırken ve ses çıkarırken, bunu boş bir ara belleğe girin ve Çalıştır düğmesine basın:
+set_mixer_control! lpf: 50
+Bu kodu çalıştırdıktan sonra, mevcut ve tüm yeni sesler kendilerine uygulanan düşük geçişli bir filtreye sahip olacak ve bu nedenle daha fazla boğulacaktır. Bunun, yeni karıştırıcı değerlerinin tekrar değiştirilinceye kadar yapışacağı anlamına geldiğine dikkat edin. Ancak, isterseniz, reset_mixer! İle karıştırıcıyı her zaman varsayılan durumuna sıfırlayabilirsiniz. Şu anda desteklenen seçeneklerden bazıları: pre_amp :, lpf: hpf :, ve amp :. Listenin tamamı için set_mixer_control!
+Zaman içinde bir veya daha fazla opt değerini kaydırmak için karıştırıcının * _slide opts özelliğini kullanın. Örneğin, karıştırıcının düşük geçiş filtresini geçerli değerden 30'a yavaşça kaydırmak için aşağıdakileri kullanın:
+'''
+set_mixer_control! lpf_slide: 16, lpf: 30 
+'''
+Daha sonra aşağıdakilerle hızlı bir şekilde yüksek bir değere geri dönebilirsiniz:
+'''
+set_mixer_control! lpf_slide: 1, lpf: 130 
+'''
+Bunu yaparken, böyle bir karıştırıcı ile çalışmak için bir tamponu boş tutmak genellikle yararlıdır.
+**5. Uygulama**
+Canlı kodlama için en önemli teknik pratiktir. Her çeşit profesyonel müzisyenler arasında en yaygın özellik, enstrümanları ile çalmayı pratik etmeleridir - genellikle günde saatlerce. Uygulama, bir gitarist kadar canlı bir kodlayıcı için de önemlidir. Alıştırma parmaklarınızın belirli kalıpları ve genel düzenlemeleri ezberlemesine izin verir, böylece daha akıcı bir şekilde yazabilir ve onlarla çalışabilirsiniz. Alıştırma ayrıca yeni sesleri ve kod yapılarını keşfetme fırsatları sunar.
+Gösteri yaparken, ne kadar çok uygulama yaparsanız, konserde rahatlamanız o kadar kolay olacaktır. Alıştırma ayrıca size çekilecek bir deneyim hazinesi verecektir. Bu, hangi değişiklik türlerinin ilginç olacağını ve mevcut seslerle iyi çalışacağını anlamanıza yardımcı olabilir.
+**Hepsini Bir Araya Getirmek **
+
+Bu ay, tartışılan her şeyi birleştiren son bir örnek vermek yerine, bir meydan okuma belirleyelim. Her gün bu fikirlerden birini uygulamak için bir hafta geçirebilecek misiniz bir bakın. Örneğin, bir gün pratik el ile tetikleyiciler, ertesi gün bazı temel live_loop çalışmaları yapılır ve ertesi gün ana karıştırıcı ile oynanır. Ardından tekrarlayın. İlk başta işler yavaş ve tıkalı hissediyorsa endişelenmeyin - pratik yapmaya devam edin ve gerçek bir izleyici için canlı kodlama yapacağınızı bilmeden önce.
+
+
 ## A.16 How to Practice Live Coding
+***Canlı Kodlama Uygulaması İçin 8 İpucu***
+Geçen ay, canlı kodlamada uzmanlaşmak için beş önemli tekniğe göz attık - diğer bir deyişle, Sonic Pi'yi bir müzik aletine yaklaşırken yaptığımız gibi kod yaklaşımı için nasıl kullanabileceğimizi araştırdık. Tartıştığımız önemli kavramlardan biri pratikti. Bu ay, canlı kodlama uygulamasının neden önemli olduğunu ve nasıl başlayabileceğinizi anlamak için daha derin bir dalış yapacağız.
+**Düzenli Olarak Pratik Yapın**
+En önemli öneri, düzenli olarak pratik yapmanızdır. Kural olarak, genellikle günde 1-2 saat pratik yapıyorum, ancak başladığınızda 20 dakika gayet iyi. Küçük ama çoğu zaman hedeflediğiniz şeydir - yani sadece 10 dakikayı yönetebiliyorsanız, bu harika bir başlangıç.
+Alıştırma ipucu # 1 - Bir alıştırma rutini geliştirmeye başlayın. Sizin için uygun olan günde güzel bir zaman geçirin ve haftanın birçok günü olabildiğince çok çalışın. Çok geçmeden normal oturumunuzu dört gözle bekliyor olacaksınız.
+**Dokunma Tipini Öğrenin**
+Sahnede sahne alan profesyonel bir müzisyeni izlerseniz, muhtemelen birkaç şeyi fark edeceksiniz. Öncelikle, oyun oynadıklarında aletlerine bakmazlar. Parmakları, kolları ve vücutları, hangi tuşlara basılacağını, kopacak dizeleri veya çok fazla düşünmek zorunda kalmadan vurmak için davulları biliyorlar. Bu “kas hafızası” olarak bilinir ve yalnızca profesyonellerin yapabileceği bir şey gibi görünse de, bu sadece tekrarlamayı pratik yaparak - bisiklete binmeyi ilk öğrendiğinizde olduğu gibi. Canlı kodlayıcılar, zihinlerini nerede hareket ettireceklerini düşünmek zorunda kalmamak için kas hafızasını kullanır, böylece müziğe odaklanabilirler. Buna dokunmatik yazma denir - klavyeye bakmak zorunda kalmadan yazma.
+Pratik ipucu # 2 - tipe dokunmayı öğrenin. Bunu başarmanıza yardımcı olacak birçok uygulama, web sitesi ve hatta oyun var. Görünümünden hoşlandığınızı bulun ve aşağıya bakmadan kod yazana kadar devam edin.
+**Dururken Kod**
+Bir müzisyenin vücudu enstrümanlarını çalmak için koşullanmıştır. Örneğin, bir trompet çaların sert bir şekilde üfleyebilmesi gerekir, bir gitaristin klavyeyi güçlü bir şekilde tutabilmesi ve bir davulcunun davullara uzun süre boyunca sürekli olarak vurabilmesi gerekir. Öyleyse, canlı kodlamada fiziksel olan nedir? Tıpkı DJ'ler gibi, canlı kodlayıcılar tipik olarak ayakta dururken performans sergiliyor ve bazıları kod yaparken bile dans ediyor! Bir masada otururken canlı kodlama pratiği yapıyorsanız ve ardından bir konserde kalkıp durmak zorunda kalırsanız, muhtemelen farkı çok zor ve sinir bozucu bulursunuz.
+Pratik ipucu # 3 - pratik yaparken ayakta durun. Bunu yapmanın en kolay yolu, bir yükseklik masasını kullanmaktır. Ancak, benim gibi evde biri yoksa, birkaç tane düşük-fi seçeneği var. Aldığım yaklaşım, oldukça iyi çalışan bir ütü masası kullanmak. Bir diğeri de bazı kutuları veya büyük kitapları normal bir masaya koymak ve klavyenizi bunun üzerine koymak. Ayrıca, uygulamaya başlamadan önce biraz gerindiğinizden ve seans boyunca biraz dans ettiğinden emin olun. Unutma, kimse seni izlemiyor, o yüzden eğlen ve sahnede kendini daha doğal hissedeceksin.
+**Uygulama Kurma**
+Çoğu enstrüman çalınmadan önce bir miktar montaj ve ayar gerektirir. Kâğıtlarla dolu bir otobüsü olan bir rock yıldızı olmadıkça, işinden önce kendi enstrümanını kurman gerekecek. Bu genellikle stresli bir zamandır ve sorunların ortaya çıkması kolaydır. Buna yardımcı olmanın bir yolu, kurulum sürecini uygulama oturumlarına dahil etmektir.
+Uygulama ipucu # 4 - kurulumunuzu uygulamanızın önemli bir parçası olarak kabul edin. Örneğin, Raspberry Pi'nizi ve klavyenizi içeride tutabileceğiniz bir kutu veya çantaya sahip olun. Her bir uygulama seansından önce, tüm parçaları çıkarın, her şeyi bağlayın ve Sonic Pi çalışana ve ses gelene kadar önyükleme işlemi boyunca çalışın . Çalışmayı tamamladığınızda, daha sonra her şeyi dikkatlice paketlemek için zaman ayırın. Bu ilk başta biraz zaman alabilir, ancak çok geçmeden düşünmeden, her şeyi inanılmaz hızlı bir şekilde kurup paketleyebileceksiniz.
+**Müziksel Olarak Deneme**
+Bir kere kurduğunuzda ve müzik yapmaya başlamak için hazır olduğunuzda, nereden başlayacağınızı bilmek için kendinizi zorlukla karşılaşabilirsiniz. Birçok insanın karşılaştığı sorunlardan biri, yapmak istedikleri ses türleri hakkında iyi bir fikir sahibi olmaları, ancak üretemedikleri için hayal kırıklığına uğramalarıdır. Bazı insanlar ne tür sesler yapmak istediklerini bile bilmiyorlar! Yapılacak ilk şey, endişelenmek değil - bu çok yaygındır ve her müzisyenin başına gelir - uzun süredir çalışıyor olsalar bile. Hiç sevmediğiniz sesler yapmak, hiç ses çıkarmamaktan çok daha önemlidir.
+Pratik ipucu # 5 - sevmediğiniz sesler ve müzik yapmak için zaman harcayın. Yeni sesleri ve fikirleri keşfetmek için zaman ayırmaya çalışın. Aradığınız tarz değilse, kulağa korkunç gelebileceğinden endişe etmeyin. Böyle bir deney yaparken, bir sese ya da sevdiğiniz bir ses kombinasyonuna tökezleme şansını arttırırsınız! Yaptığınız seslerin% 99'u kötü olsa bile,% 1'i yeni parçanıza riff ya da giriş olabilir. Sevmediğiniz şeyleri unutun ve yaptığınız parçaları hatırlayın. Kodla müzik yaparken bu daha da kolay - sadece kaydet düğmesine tıklayın!
+**Kodu Duy**
+Birçok müzisyen müzikal nota bakabilir ve çalmak zorunda kalmadan kafasındaki müziği duyabilir. Bu çok faydalı bir beceridir ve canlı kodlama alıştırma seanslarınıza katılmaya değer. Değersiz nokta, kodun neye benzeyeceğini biraz anlayabilmektir. Tam olarak kafanızdan duyabiliyor olmanıza gerek yok, ancak bunun yerine kodun hızlı, yavaş, yüksek, ritmik, melodik, rastgele, vb. Olup olmadığını bilmek faydalı olacaktır. Bu işlemi tersine çevirebilme - kafanızdaki müziği duyabilme ve bunu yapmak için hangi kodu yazacağınızı bilme. Bu konuda ustalaşmanız uzun zaman alabilir, ancak bir kez yaparsanız, sahnede doğaçlama yapabilir ve fikirlerinizi akıcı bir şekilde ifade edebilirsiniz.
+Pratik ipucu # 6 - Sonic Pi'ye bir kod yazın, ancak Çalıştır düğmesine basmayın. Bunun yerine, hangi sesi üreteceğini hayal etmeye çalışın. Sonra, Çalıştır, dinle, dinle ve neyin doğru olduğunu ve neyin yapmadığını düşün. Kodlama işleminizin doğal bir parçası haline gelinceye kadar bunu tekrarlamaya devam edin. Pratik yaparken normalde kodun neye benzeyeceği konusunda iyi bir fikrim var. Ancak, yine de şaşırdım ve sonra neden yanıldığımı düşünerek biraz zaman geçirip duracağım. Bu her olduğunda, kendimi yeni yollarla ifade etmeme izin veren yeni numaralar öğreniyorum.
+**Tüm Dikkat Dağıtıcaları Kaldır**
+Pratik yaparken sık karşılaşılan bir sorun, diğer şeylerle dikkatinizi dağıtmaktır. Alıştırma yapmak zordur ve yaptığınız müzik türünden bağımsız olarak gerçek bir disiplin gerektirir - cazdan klasik ve EDM'ye. Başlamak veya ilerlemek için mücadele ediyorsanız, sosyal medyada dolaşmak veya internette bir şeyler aramak çok kolaydır. Kendinizi 20 dakikalık bir uygulama hedefi olarak belirlediyseniz, denemek önemlidir. Tüm bu zamanı mümkün olduğunca üretken olarak geçirin.
+Pratik ipucu # 7 - Uygulamaya başlamadan önce mümkün olduğunca fazla dikkat dağıtıcıyı kaldırın. Örneğin, internet bağlantısını kesin, telefonunuzu başka bir odaya koyun ve rahatsız edilmeyeceğiniz sessiz bir yerde pratik yapmaya çalışın. Müzik kodlamaya odaklanmaya çalışın ve işiniz bittiğinde dikkatinizin dağılmasına geri dönebilirsiniz.
+**Alıştırma Günlüğü Tut**
+Pratik yaparken, zihninizi sık sık yeni heyecan verici fikirlerle dolu bulacaksınız - yeni müzik yönleri, denemek için yeni sesler, yazmak için yeni işlevler, vb. Bu fikirler genellikle ne yaptığınızı durduracak kadar ilginç yapıyorum ve fikir üzerinde çalışmaya başlayın. Bu başka bir dikkat dağıtma şekli!
+Alıştırma ipucu # 8 - klavyenizdeki alıştırma günlüğünü tutun. Heyecan verici yeni bir fikir edindiğinizde, uygulama oturumunuzu geçici olarak duraklatın, fikri hemen not edin, sonra unutun ve uygulamaya devam edin. Uygulamayı tamamladıktan sonra fikirlerinizi düşünerek ve üzerinde çalışarak kaliteli zaman geçirebilirsiniz.
+**Hepsini Bir Araya Getirmek**
+Bu fikirlerin mümkün olduğunca çoğunu içeren bir uygulama rutini oluşturmaya çalışın. Seansları olabildiğince eğlenceli tutmaya çalışın, ancak bazı uygulama seanslarının zor olacağına ve biraz kendinize iş hissedeceğine dikkat edin. Ancak, ilk parçanızı yarattıktan veya ilk performansınızı verdikten sonra hepsi buna değecektir. Unutma, pratik başarının anahtarıdır!
+
 ## A.17 Sample Stretching
+***Örnek Germe***
+İnsanlar Sonic Pi'yi keşfettiğinde, öğrendikleri ilk şeylerden biri, örnek işlevi kullanarak önceden kaydedilmiş sesleri çalmanın ne kadar basit olduğu. Örneğin, endüstriyel bir davul döngüsünü çalabilir, bir koronun sesini duyabilir veya hatta tek bir kod satırı üzerinden bir vinil çizik dinleyebilirsiniz. Bununla birlikte, birçok insan, bazı güçlü efektler için örneğin oynatılma hızını ve kaydedilen sesler üzerinde yepyeni bir kontrol seviyesi için gerçekte değişiklik yapabileceğinizi fark etmiyor. Öyleyse, Sonic Pi'nin bir kopyasını çıkartın ve bazı örnekleri esnetmeye başlayalım!
+**Örneklerin Yavaşlatılması**
+Bir örneğin oynatma oranını değiştirmek için hızı kullanmamız gerekir: opt:
+'''
+sample :guit_em9, rate: 1 
+'''
+1'lik bir oran belirlersek, örnek normal hızda oynatılır. Eğer yarı hızda oynatmak istiyorsak, sadece 0,5:
+'''
+sample :guit_em9, rate: 0.5 
+'''
+Bunun ses üzerinde iki etkisi olduğuna dikkat edin. Öncelikle, örnek adımda daha az ses çıkarır ve ikincisi oynatmak için iki kez uzun sürer (bunun neden böyle olduğunu açıklamak için kenar çubuğuna bakın). 0'a doğru hareket eden daha düşük ve daha düşük hızları bile seçebiliriz, bu nedenle: 0,25'lik bir çeyrek hızdır, 0,1 hızın onda biridir, vb. Bazı düşük oranlarla çalmayı deneyin ve sesi düşük seviyeye getirip getiremeyeceğinizi görün gürle.
+
+**Yukarı Yönlü Hızlandırma Örnekleri**
+
+Küçük bir oran kullanarak sesi daha uzun ve daha düşük hale getirmenin yanı sıra, sesi daha kısa ve daha yüksek yapmak için daha yüksek oranları kullanabiliriz. Bu sefer davul döngüsüyle oynayalım. İlk önce, varsayılan 1'de nasıl ses geldiğini dinleyin:
+'''
+sample :loop_amen, rate: 1 
+'''
+Şimdi biraz hızlandıralım:
+
+Örnek: loop_amen, oran: 1.5
+
+Ha! Müzik türlerini eski skool teknodan ormana taşıdık. Her bir davul vuruşunun perdesinin ne kadar yüksek olduğuna ve tüm ritmin nasıl hızlandığına dikkat edin. Şimdi daha da yüksek oranlar deneyin ve tambur döngüsünü ne kadar yüksek ve kısa yapabileceğinizi görün. Örneğin, 100'lük bir oran kullanırsanız, bateri döngüsü bir tıklamaya dönüşür!
+**Geri Vites**
+Şimdi, çoğunuzun aynı şeyi düşündüğünden eminim… “oran için negatif bir sayı kullanırsanız?”. Harika soru! Bir an için bunu düşünelim. Hızımız: opt, örneğin oynatıldığı hızı, 1'i normal hız, 2'si çift hız, 0,5'i yarı hız, 1'i geriye doğru anlamalıdır! Hadi bir tuzakta deneyelim. İlk önce normal hızda oynatın:
+'''
+sample :elec_filt_snare, rate: 1 
+'''
+Şimdi geriye doğru oynat:
+'''
+sample :elec_filt_snare, rate: -1 
+'''
+Tabii ki, -2 ile iki kat daha hızlı ya da yarı hızda -0.5 ile geriye doğru oynayabilirsiniz. Şimdi, farklı negatif oranlarla oynayın ve eğlenin. Özellikle: misc_burp örneği ile eğlenceli.
+
+**Örnek, Hız ve Adım [Kenar Çubuğu]**
+Hız modifikasyonunun numuneler üzerindeki etkilerinden biri, daha hızlı oranların numunenin ziftte daha yüksek çıkmasına ve daha yavaş hızların numunenin ziftte daha düşük olmasına neden olmasıdır. Her gün yaşamda bu etkiyi duymuş olabileceğiniz bir başka yer de bisiklete binerken ya da bip yaya geçidinden geçerken - ses kaynağına doğru ilerlerken ses perdesinden uzaklaştığınızdan daha yüksektir - sözde Doppler etkisi. Bu neden?
+Bir sinüs dalgası ile temsil edilen basit bir bip sesi düşünelim. Bir bip işaretlemek için bir osiloskop kullanırsak, Şekil A gibi bir şey göreceğiz. Bir bip yüksek ok sesi çıkarırsak, Şekil B'yi göreceğiz ve alt oktav Şekil C'ye benzeyecektir. notlar daha küçüktür ve alt notaların dalgaları daha yayılır.
+Bir bip sesi örneği, bir grafiğe çizildiğinde orijinal eğrileri yeniden çizecek birçok sayıdan (x, y, koordinatlardan) başka bir şey değildir. Her dairenin bir koordinatı temsil ettiği şekil D'ye bakınız. Koordinatları sese geri döndürmek için, bilgisayar her x değerinde çalışır ve karşılık gelen y değerini hoparlörlere gönderir. Buradaki hile, bilgisayarın x sayılarıyla çalışma hızının kaydedildikleri oranla aynı olması gerekmediğidir. Başka bir deyişle, her daire arasındaki boşluk (bir zamanı temsil eden) gerilebilir veya sıkıştırılabilir. Bu nedenle, bilgisayar x değerlerini orijinal hızdan daha hızlı bir şekilde geçirirse, daha yakın bir bip sesiyle sonuçlanacak şekilde daireleri birbirine daha yakın ezme etkisi olacaktır. Ayrıca tüm çevrelerde daha hızlı çalışacağımızdan bip sesini kısaltacaktır. Bu, Şekil E'de gösterilmiştir.
+Son olarak, bilinmesi gereken son şey, Fourier adlı bir matematikçinin, herhangi bir sesin aslında bir araya geldiğini ve çok sayıda sinüs dalgası olduğunu kanıtlamasıdır. Bu nedenle, kaydedilmiş herhangi bir sesi sıkıştırıp uzattığımızda, aslında aynı anda birçok sinüs dalgasını aynı anda gerer ve sıkıştırırız.
+**Adım Bükme**
+Görüldüğü gibi, daha hızlı bir hız kullanmak ses tonunu yükseltir ve daha yavaş bir hız ses tonunu düşürür. Çok basit ve kullanışlı bir püf noktası, oranın iki katına çıkmasının aslında ziftin oktav kadar yükselmesine neden olduğunu bilmek ve hız sonuçlarının ters yönde yarıya inmesinin ziftin oktav kadar düşük olmasıyla sonuçlanmasıdır. Bu, melodik numuneler için, çift / yarı oranlarda kendisiyle birlikte çalmak, aslında kulağa hoş geliyor:
+'''
+sample :bass_trance_c, rate: 1
+sample :bass_trance_c, rate: 2
+sample :bass_trance_c, rate: 0.5 
+'''
+Ancak, sadece perdenin bir yarı ton (piyanoda bir nota kadar) yükseleceği şekilde oranı değiştirmek istiyorsak ne olur? Sonic Pi bunu rpitch ile çok kolaylaştırıyor: opt:
+'''
+sample :bass_trance_c
+sample :bass_trance_c, rpitch: 3
+sample :bass_trance_c, rpitch: 7 
+'''
+Sağdaki kayıt defterine bakarsanız, 3'lük bir rpitchin gerçekte 1.1892 oranına, 7'nin bir rpitch'in 1.4983 oranına karşılık geldiğini fark edeceksiniz. Son olarak, hızı birleştirebiliriz: ve rpitch: opts:
+'''
+sample :ambi_choir, rate: 0.25, rpitch: 3
+sleep 3
+sample :ambi_choir, rate: 0.25, rpitch: 5
+sleep 2
+sample :ambi_choir, rate: 0.25, rpitch: 6
+sleep 1
+sample :ambi_choir, rate: 0.25, rpitch: 1 
+'''
+**Hepsini Bir Araya Getirmek**
+Bu fikirleri birleştiren basit bir parçaya göz atalım. Boş bir Sonic Pi tamponuna kopyalayın, oyuna basın, bir süre dinleyin ve sonra kendi parçanız için bir başlangıç noktası olarak kullanın. Örneklerin oynatma hızını değiştirmenin ne kadar eğlenceli olduğunu görün. Ek bir alıştırma olarak kendi seslerinizi kaydetmeyi deneyin ve çılgınca hangi sesleri çıkartabileceğinizi görün.
+'''
+live_loop :beats do
+  sample :guit_em9, rate: [0.25, 0.5, -1].choose, amp: 2
+  sample :loop_garzul, rate: [0.5, 1].choose
+  sleep 8
+end
+ 
+live_loop :melody do
+  oct = [-1, 1, 2].choose * 12
+  with_fx :reverb, amp: 2 do
+    16.times do
+      n = (scale 0, :minor_pentatonic).choose
+      sample :bass_voxy_hit_c, rpitch: n + 4 + oct
+      sleep 0.125
+    end
+  end
+end
+'''
+
 ## A.18 Sound Design - Additive Synthesis
 ## A.19 Sound Design - Substractive Synthesis
