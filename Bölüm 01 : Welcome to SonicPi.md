@@ -40,11 +40,11 @@ end
  
  Eğer durdurmak isterseniz "dur" butonuna basın. Bence daha durdura basmayın... Onun yerine aşağıdaki adımları takip edin:
   
-1.Bas davulunuzun çalmaya devam ettiğinden emin olun
-2.sleep değerini 0.5 den 1 e değiştirin
-3.çalıştır butouna yeniden basın
-4.Davulun hızının nasıl değiştiğine dikkat edin.
-5.Son olarak, /bu anı hatırlayın/, bu sizin Sonic Pi kullanarak ilk canlı kodlayışınız, son olacak gibi de durmuyor...
+-1.Bas davulunuzun çalmaya devam ettiğinden emin olun
+-2.sleep değerini 0.5 den 1 e değiştirin
+-3.çalıştır butouna yeniden basın
+-4.Davulun hızının nasıl değiştiğine dikkat edin.
+-5.Son olarak, /bu anı hatırlayın/, bu sizin Sonic Pi kullanarak ilk canlı kodlayışınız, son olacak gibi de durmuyor...
   
 Tamam, bu yeterince basitti. Şimdi miximize başka şeyler de ekleyelim.
   sample :bd_haus kodunun üzerine  sample :ambi_choir, rate: 0.3 satırını ekleyin. Kodunuz şunun gibi olmalı:
