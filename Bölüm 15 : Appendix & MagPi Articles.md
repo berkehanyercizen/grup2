@@ -5,23 +5,9 @@
 ## A.04 Synth Riffs
 ## A.05 Acid Bass
 ***Asit Bas***
-Elektronik dans gecmisine kucuk Roland TB-303 sentezleyicisinin devasa etkisini
-gormeden bakmak olanaksizdir. Bu klasik gicirdayan ve gurultulu TB-303 bas
-riffleri erken Cikago Ev sahnesinden yeni Plastikman, Squarepusher ve Aphex
-Twin gibi elektronik artistlere kadar duyuldu.
-Rolan hicbir zaman TB-303'un dans muziginde kullanilmasini amaclamamisti. Bu
-orijinal olarak gitaristlerin pratik yapmasina yardim icin olusturuldu. Instanlarin
-onlari eslik edebilcekleri baslari calmak icin kullanilacagi dusunuluyordu. Ne
-yazik ki birkac problem vardi: bunlar programlamak icin cok kucutu, bir bas gitarin
-yerini tutabilecek kadar iyi selseri yoktu ve cok pahaliydilar. Kayiplarini
-kaybetmek icin, Roland 10,000 urun satildiktan sonra bunlarin uretimini durdurdu
-ve birkac yil boyunca gitaristlerin raflarinda durduktan sonra ikinci el
-magzalarinda gorulmeye baslandilar. Bu terk edilmis TB-303'ler onlari Roland'in
-tahmin bile edemedigi yeni sesler uretecek yeni jenerasyonlar tarafindan
-kesfedilmeyi bekliyordu. Asit Ev boylece dogdu.
-Su anda bir orijinal TB-303 bulmanin zor olmasina ragmen, sunu duymaktan mutlu
-olacaksiniz ki kendi Rasberry Pi'nizi Sonic Pi kullanarak bir taneye donusturebilirsiniz.
-Sonic Pi yi calistirin, icine bu kodu atin ve "Run" a basin:
+Elektronik dans gecmisine kucuk Roland TB-303 sentezleyicisinin devasa etkisini gormeden bakmak olanaksizdir. Bu klasik gicirdayan ve gurultulu TB-303 bas riffleri erken Cikago Ev sahnesinden yeni Plastikman, Squarepusher ve Aphex Twin gibi elektronik artistlere kadar duyuldu.
+Rolan hicbir zaman TB-303'un dans muziginde kullanilmasini amaclamamisti. Bu orijinal olarak gitaristlerin pratik yapmasina yardim icin olusturuldu. Instanlarin onlari eslik edebilcekleri baslari calmak icin kullanilacagi dusunuluyordu. Ne yazik ki birkac problem vardi: bunlar programlamak icin cok kucutu, bir bas gitarin yerini tutabilecek kadar iyi selseri yoktu ve cok pahaliydilar. Kayiplarini kaybetmek icin, Roland 10,000 urun satildiktan sonra bunlarin uretimini durdurdu ve birkac yil boyunca gitaristlerin raflarinda durduktan sonra ikinci el magzalarinda gorulmeye baslandilar. Bu terk edilmis TB-303'ler onlari Roland'in tahmin bile edemedigi yeni sesler uretecek yeni jenerasyonlar tarafindan kesfedilmeyi bekliyordu. Asit Ev boylece dogdu.
+Su anda bir orijinal TB-303 bulmanin zor olmasina ragmen, sunu duymaktan mutlu olacaksiniz ki kendi Rasberry Pi'nizi Sonic Pi kullanarak bir taneye donusturebilirsiniz. Sonic Pi yi calistirin, icine bu kodu atin ve "Run" a basin:
 ```
 use_synth :tb303
 play :e1
@@ -29,9 +15,7 @@ play :e1
 Aninda asit bas! Hadi oynayalim…
 
 ***Bas'i Bastir***
-Oncelike, hadi canli bir arpej yapici olusturalim. Son rehberde rifflerin nasil
-birbir isaretledigimiz ve sona geldigimizde tekrar ettigimiz
- bir nota halkasi oldugunu gorduk. Hadi bunu yapan canli bir dongu yazalim:
+Oncelike, hadi canli bir arpej yapici olusturalim. Son rehberde rifflerin nasil birbir isaretledigimiz ve sona geldigimizde tekrar ettigimiz bir nota halkasi oldugunu gorduk. Hadi bunu yapan canli bir dongu yazalim:
 ```
 use_synth :tb303
 live_loop :squelch do
@@ -43,48 +27,18 @@ end
 Her satira bakalim.
 1. Ilk satirda varsayilan sentezi tb303'e use_synth fn yardimiyla ceviriyoruz.
 2. Ikinci satirda :squelch isimli, tekrar tekrar doncek bir dongu yaratiyoruz.
-3. Ucuncu satirda riff'imizi yaratiyoruz - .tick ile birbir isaretledigimiz
-bir nota halkasi. n'i anlik notayi belirmesi icin tanimliyoruz. Esittir isareti
-sadece sagdaki degeri soldaki isime atamaya yariyor. Bu her dongude farkli
-olacak. Ilk dongude n'e :e1, ikinci dongude :e2, sonra :e3 ve sonra tekrar
-:e1 atancak ve boyle sonsuza kadar gitcek.
-4. Dorduncu satirda :tb303 sentezini tetikliyoruz. Burda birkac onemli opt
-kullaniyoruz: release:, cutoff:, res: ve wave:.
-5. Besinci satir bizim sleep'imiz - donguye her donguyu 0.125 saniyede bir kere
-donmesini yani saniyede 8 kere, 60 BPM ile donmesini soyluyoruz.
-6. Altinci satir dongunun end'i. Bu Sonic Pi ye dongunun sonunun nerde oldugunu
-soyluyor.
-Siz ne oldugunu anlamaya ugrasirken, kodu yukari yazin ve calistirin. :tb303'un
-basladigini duymalisiniz. Simdi, canli kodlamaya baslayalim.
-Dongu hala aktif ike, cutoff:'u 110'a degistirin ve Run'a basin. Sesin biraz
-daha kaba ve baskin oldugunu duymalisiniz. 120 yazip tekrar Run'layin. Simdi
-130. Yuksek cutoff degerlerinin nasil daha delici ve yogun geldigini dinleyin.
-Son olarak, 80'e dusurun dinlenmek icin. Bunu istediginiz kadar tekrarlarin,
-merak etmeyin ben hala burda olcam...
-Oynamaya deger bir diger opt ise res:. Bu rezonansin seviyesini kontrol ediyor.
-Yuksek rezonans, asit bas seslerin bir karakteridir. Bi su anda res:'i 0.8'de
-tutuyoruz. Bunu 0.85'e cikarmayi deneyin, sonra 0.9, son olarak 0.95. 110 gibi
-bir cutoff'un farklari daha acik yaptigini fark edebilirsiniz. Son olarak
-abartin ve en yogun sesler icin 0.999 yazin. red bu kadar yuksekken, cutoff
-filtresinin o kadar rezonansini duyacaksiniz ki kendi seslerini yapmaya
-baslayacak.
-Son olarak buyuk bir etki icin wave: optunu 1'e degistirin. Bu bir arpej
-yapicinin secimidir. Varsayilan deger 0 bir testere disi dalgadir. 1 bir
-nabiz dalga ve 2 bir ucgen dalgadir.
-Tabiki de, notalari degistirerek degisik riffler deneyin. Ilk asit bas
-sentezinizle eglenin.
+3. Ucuncu satirda riff'imizi yaratiyoruz - .tick ile birbir isaretledigimiz bir nota halkasi. n'i anlik notayi belirmesi icin tanimliyoruz. Esittir isareti sadece sagdaki degeri soldaki isime atamaya yariyor. Bu her dongude farkli olacak. Ilk dongude n'e :e1, ikinci dongude :e2, sonra :e3 ve sonra tekrar :e1 atancak ve boyle sonsuza kadar gitcek.
+4. Dorduncu satirda :tb303 sentezini tetikliyoruz. Burda birkac onemli opt kullaniyoruz: release:, cutoff:, res: ve wave:.
+5. Besinci satir bizim sleep'imiz - donguye her donguyu 0.125 saniyede bir kere donmesini yani saniyede 8 kere, 60 BPM ile donmesini soyluyoruz.
+6. Altinci satir dongunun end'i. Bu Sonic Pi ye dongunun sonunun nerde oldugunu soyluyor.
+Siz ne oldugunu anlamaya ugrasirken, kodu yukari yazin ve calistirin. :tb303'un basladigini duymalisiniz. Simdi, canli kodlamaya baslayalim.
+Dongu hala aktif ike, cutoff:'u 110'a degistirin ve Run'a basin. Sesin biraz daha kaba ve baskin oldugunu duymalisiniz. 120 yazip tekrar Run'layin. Simdi 130. Yuksek cutoff degerlerinin nasil daha delici ve yogun geldigini dinleyin. Son olarak, 80'e dusurun dinlenmek icin. Bunu istediginiz kadar tekrarlarin, merak etmeyin ben hala burda olacagim...
+Oynamaya deger bir diger opt ise res:. Bu rezonansin seviyesini kontrol ediyor. Yuksek rezonans, asit bas seslerin bir karakteridir. Bi su anda res:'i 0.8'de tutuyoruz. Bunu 0.85'e cikarmayi deneyin, sonra 0.9, son olarak 0.95. 110 gibi bir cutoff'un farklari daha acik yaptigini fark edebilirsiniz. Son olarak abartin ve en yogun sesler icin 0.999 yazin. red bu kadar yuksekken, cutoff filtresinin o kadar rezonansini duyacaksiniz ki kendi seslerini yapmaya baslayacak.
+Son olarak buyuk bir etki icin wave: optunu 1'e degistirin. Bu bir arpej yapicinin secimidir. Varsayilan deger 0 bir testere disi dalgadir. 1 bir nabiz dalga ve 2 bir ucgen dalgadir.
+Tabiki de, notalari degistirerek degisik riffler deneyin. Ilk asit bas sentezinizle eglenin.
 ***TB-303'un Analizi***
-Orijinal TB-303'un dizayni cok basit. Bu diyagramlardan gorebileceginiz gibi
-sadece 4 ana parca var.
-Ilki arpej yapici dalga - sesin hammaddeleri. Bu durumda bir kare dalgamiz var.
-Sonra kare dalganin zamanla amperini kontrol eden arpej yapicinin buyukluk
-kilifi var. Bunlar Sonic Pi'de attack:,decay:,sustain: ve release: optlari
-ve bunlarin seviyeleriyle erisilebilir. Daha cok bilgi isin Bolum 2.4'u
-okuyun. Biz sonra kilifli kare dalgamizi bir rezonans dusuk gecis filtresinden
-geciriyoruz. Bu yuksek frekanslari keser ve guzel rezonans effektini uygular.
-Burda eglence basliyor.  Bu filternin cutoff degeri de kendi kilifiyle kontrol
-ediliyor! Bu demek ki biz sesin tinisi uzerinde cok iyi kontrolumuz var demek.
-Hadi bakalim:
+Orijinal TB-303'un dizayni cok basit. Bu diyagramlardan gorebileceginiz gibi sadece 4 ana parca var.
+Ilki arpej yapici dalga - sesin hammaddeleri. Bu durumda bir kare dalgamiz var. Sonra kare dalganin zamanla amperini kontrol eden arpej yapicinin buyukluk kilifi var. Bunlar Sonic Pi'de attack:,decay:,sustain: ve release: optlari ve bunlarin seviyeleriyle erisilebilir. Daha cok bilgi isin Bolum 2.4'u okuyun. Biz sonra kilifli kare dalgamizi bir rezonans dusuk gecis filtresinden geciriyoruz. Bu yuksek frekanslari keser ve guzel rezonans effektini uygular. Burda eglence basliyor.  Bu filternin cutoff degeri de kendi kilifiyle kontrol ediliyor! Bu demek ki biz sesin tinisi uzerinde cok iyi kontrolumuz var demek. Hadi bakalim:
 ```
 use_synth :tb303
 with_fx :reverb, room: 1 do
@@ -94,19 +48,11 @@ with_fx :reverb, room: 1 do
   end
 end 
 ```
-Her standard kilif optu icin, :tb303 sentezinde bir cutoff_ karsiligi var. Yani,
-cutoff vurus suresini degistirmek icin cutoff_attack: optunu kullanabiliriz.
-Yukardaki kodu kopyalarin ve bos bir sayfaya yapistirip calistirin. Ilginc bir
-sesin ice ve disa sakidigini duyacaksiniz. Simdi oynamaya basladiniz. Simdi
-cutoff_attack: suresini 1 ve sonra 0.5'e cevirin. Simdi de 8'e.
-Herseyi bir :reverb FX'inden ekstra bir atmosfer icin gecirdigimize dikkat edin-
-baska bir FX deneyin ve calisiyormu bakin.
+Her standard kilif optu icin, :tb303 sentezinde bir cutoff_ karsiligi var. Yani, cutoff vurus suresini degistirmek icin cutoff_attack: optunu kullanabiliriz. Yukardaki kodu kopyalarin ve bos bir sayfaya yapistirip calistirin. Ilginc bir sesin ice ve disa sakidigini duyacaksiniz. Simdi oynamaya basladiniz. Simdi cutoff_attack: suresini 1 ve sonra 0.5'e cevirin. Simdi de 8'e.
+Herseyi bir :reverb FX'inden ekstra bir atmosfer icin gecirdigimize dikkat edin- baska bir FX deneyin ve calisiyormu bakin.
 
 ***Herseyi Bir Araya Getirmek***
-Sonunda, bu rehberdeki fikirlerin birlesimiyle bestelenmis bir parca. Kopyalayip
-bos bir sayfaya yapistirin, bir sure dinleyin ve canli kodlamayla kendi
-degisikliklerinizi yapin. Ne kadar ilginc sesler yapabileceginizi test edin! 
-Sonra gorusmek uzere...
+Sonunda, bu rehberdeki fikirlerin birlesimiyle bestelenmis bir parca. Kopyalayip bos bir sayfaya yapistirin, bir sure dinleyin ve canli kodlamayla kendi degisikliklerinizi yapin. Ne kadar ilginc sesler yapabileceginizi test edin!  Sonra gorusmek uzere...
 ```use_synth :tb303
 use_debug false
  
@@ -131,49 +77,33 @@ end
 ```
 ## A.06 Musical Minecraft
 ***Muziksel Minecraft***
-Merhaba ve tekrar hos geldiniz! Onceki rehberlerde biz Sonic Pi'nin muzik
-olanaklarına odaklanmistik - (Rasberry Pi'yi bir performansa hazir muzik
-aletine cevirmek). Simdiye kadar sunlari ogrendik:
+Merhaba ve tekrar hos geldiniz! Onceki rehberlerde biz Sonic Pi'nin muzik olanaklarına odaklanmistik - (Rasberry Pi'yi bir performansa hazir muzik aletine cevirmek). Simdiye kadar sunlari ogrendik:
 - Canli Kodlama - sesleri muzigin ortasinda degistirmek
 - Yuksek vuruslar kodlamak
 - Guzlu sentez onculeri olusturmak
 - Unlu RB-303 asit bass sesini tekrar olusturmak.
-Size gostereceğimiz daha cok sey var (bunlari gelecek baskılarda inceleyecegiz).
-Yine de, bu ay, Sonic Pi'nin muhtemelen farkında olmadıgınız yapabilecegi bir 
-seye bakalım: Minecraft'ı kontrol etmek.
+Size gostereceğimiz daha cok sey var (bunlari gelecek baskılarda inceleyecegiz). Yine de, bu ay, Sonic Pi'nin muhtemelen farkında olmadıgınız yapabilecegi bir  seye bakalım: Minecraft'ı kontrol etmek.
 
 ***Merhaba Minecraft Dunyasi***
-Tamam, hadi baslayalim. Raspberry Pi yi baslatin, Minecraft Pi yi baslatin ve
-yeni bir dunya yaratin. Simdi Sonic Pi yi acin ve iki programi da gorebileceginiz
-sekilde yerlestirin.
+Tamam, hadi baslayalim. Raspberry Pi yi baslatin, Minecraft Pi yi baslatin ve yeni bir dunya yaratin. Simdi Sonic Pi yi acin ve iki programi da gorebileceginiz sekilde yerlestirin.
 Yeni bir sayfaya sunlari yazin:
 ```
 mc_message "Hello Minecraft from Sonic Pi!" 
 ```
-Bunu calistirin. Boom! Mesajiniz Minecraft'ta gozuktu! Ne kadar kolaydi degil
-mi? Simdi, okumayi bir an birakin ve kendi mesajlarinizla oynayin. Iyi eglenceler!
+Bunu calistirin. Boom! Mesajiniz Minecraft'ta gozuktu! Ne kadar kolaydi degil mi? Simdi, okumayi bir an birakin ve kendi mesajlarinizla oynayin. Iyi eglenceler!
 
 ***Sonic Isinlayici***
-Hadi biraz kesif yapalim. Standard secenek mouse ve klavye kullanarak yurumeye
-baslamaktir. Bu calisir, ama cok yavas ve sikici bir sekilde. Bir isinlanma
-makinemiz olsaydi cok daha iyi olurdu. Sonic Pi sayesinde, var. Sunu deneyin:
+Hadi biraz kesif yapalim. Standard secenek mouse ve klavye kullanarak yurumeye baslamaktir. Bu calisir, ama cok yavas ve sikici bir sekilde. Bir isinlanma makinemiz olsaydi cok daha iyi olurdu. Sonic Pi sayesinde, var. Sunu deneyin:
 ```
 mc_teleport 80, 40, 100
 ```
-Bu baya yuksek oldu! Eger ucuyor modunda degilsen burdan zemine kadar duserdin.
-Eger bosluk tusuna cift tiklarsan ucus moduna girebilirsin, bunu yaptitan sonra
-tekrar isinlar, oldugun yerde suzuluyor olcaksin.
-Simdi, bu sayilar ne demek? 3 sayimiz var ve bunlar gitmek istedigimiz yerin
-kordinatlarini belirtiyor. Bu sayilara sirasiyla x, y, z isimleri verebiliriz:
+Bu baya yuksek oldu! Eger ucuyor modunda degilsen burdan zemine kadar duserdin. Eger bosluk tusuna cift tiklarsan ucus moduna girebilirsin, bunu yaptitan sonra tekrar isinlar, oldugun yerde suzuluyor olcaksin.
+Simdi, bu sayilar ne demek? 3 sayimiz var ve bunlar gitmek istedigimiz yerin kordinatlarini belirtiyor. Bu sayilara sirasiyla x, y, z isimleri verebiliriz:
 - x: Ne kadar sol veya sag olmak istedigimiz (80)
 - y: Ne kadar yuksekte olmak istedigimiz (40)
 - x: Ne kadar ileri veya geri olmak istedigimiz (100)
-Bu degerleri degistirerek dunyada heryere isinlanabiliriz. Deneyin! Baska sayilar
-girin ve nereye vardiginiza bakin. Eger ekran kararisa bu yer alrinda veya bir
-dagin icinde oldugunuz anlamina geliyor. Daha yuksek bir y degeri girin bu
-durumda. Sevceginiz bir yer bulana kadar kesif yapmaya devam edin...
-Su ana kadarki fikirleri kullanarak, hadi guzel bir isinlanma sesi cikaran bir
-Sonic Isinlayici yapalim.
+Bu degerleri degistirerek dunyada heryere isinlanabiliriz. Deneyin! Baska sayilar girin ve nereye vardiginiza bakin. Eger ekran kararisa bu yer alrinda veya bir dagin icinde oldugunuz anlamina geliyor. Daha yuksek bir y degeri girin bu durumda. Sevceginiz bir yer bulana kadar kesif yapmaya devam edin...
+Su ana kadarki fikirleri kullanarak, hadi guzel bir isinlanma sesi cikaran bir Sonic Isinlayici yapalim.
 ```
 mc_message "Preparing to teleport...."
 sample :ambi_lunar_land, rate: -1
@@ -188,18 +118,12 @@ mc_teleport 90, 20, 10
 mc_message "Whoooosh!" 
 ```
 ***Sihirli Bloklar***
-Simdi guzel bir konum buldugunuza gore, hadi insa etmeye baslayalim. Alisik
-oldugunuz seyi yapip farenizle bloklari yerlestirmeye baslayabilirsiniz. Veya
-Sonic Pi nin sihirini kullanabilirsiniz. Sunu deneyin:
+Simdi guzel bir konum buldugunuza gore, hadi insa etmeye baslayalim. Alisik oldugunuz seyi yapip farenizle bloklari yerlestirmeye baslayabilirsiniz. Veya Sonic Pi nin sihirini kullanabilirsiniz. Sunu deneyin:
 ```
 x, y, z = mc_location
 mc_set_block :melon, x, y + 5, z 
 ```
-Yukari bakin! Havada bir karpuz var! Bir an durup koda bakin. Ne yaptik? Ilk
-satirda Steve'in konumunu alip x, y ve z degiskenlerine atadik. Bunlar
-bahsettigimiz kordinatlara karsilik geliyor. Bunlari mc_set_block'ta kullanip
-istedigimiz kordinata istedigimiz blogu yerlestirebildik. Havaya yerlestirmek
-icin y degerine 5 ekledik. Hadi bunlardan uzun bir sira yapalim:
+Yukari bakin! Havada bir karpuz var! Bir an durup koda bakin. Ne yaptik? Ilk satirda Steve'in konumunu alip x, y ve z degiskenlerine atadik. Bunlar bahsettigimiz kordinatlara karsilik geliyor. Bunlari mc_set_block'ta kullanip istedigimiz kordinata istedigimiz blogu yerlestirebildik. Havaya yerlestirmek icin y degerine 5 ekledik. Hadi bunlardan uzun bir sira yapalim:
 ```
 live_loop :melon_trail do
   x, y, z = mc_location
@@ -207,21 +131,11 @@ live_loop :melon_trail do
   sleep 0.125
 end 
 ```
-Simdi Minecraft'a atla, ucus modunda oldugundan emin ol ve etrafta dolas. Arkana
-bakarsan uzun bir karpuz sirasi gorceksin!
+Simdi Minecraft'a atla, ucus modunda oldugundan emin ol ve etrafta dolas. Arkana bakarsan uzun bir karpuz sirasi gorceksin!
 
 ***Minecraft'i Canli Kodlamak***
-Bu rehberi son birkac aydir takip ettiysenin buyuk ihtimal coktan hayrete dusmussunuzdur.
-Karpuz izi cok etkileyiciydi, ama en ilgi cekici bolum Minecraft'ta live_loop
-kullanabilmektir! Bilmeyenler icin, live_loop Sonic Pi'nin ozel diger programlama
-dillerinde olmayan ozelligidir. Birden fazla donguyu ayni anda calistirmaya ve
-bu donguleri calismanin ortasinda degistirmeye yarar. Cog guzlu ve eglencelidirler.
-Be live_loops'u gece kuluplerinde music uretmek icin kullaniyorum. Fakat, bugun
-bir bunu hem muzik hem Minecraft icin kullanacagiz.
-Hadi baslayalim. Kodu calistirin ve karpuz izi birakmaya devam edin. Simdi, kodu
-durdurmadan :melon'u :brick ile degistirip Run'a tiklayin. Bakin, artik tugladan
-bir iz birakiyorsunuz. Ne kadar kolaydi degil mi? Yaninda da muzik calsin
-ister miziniz? Kolay. Bunu deneyin:
+Bu rehberi son birkac aydir takip ettiysenin buyuk ihtimal coktan hayrete dusmussunuzdur. Karpuz izi cok etkileyiciydi, ama en ilgi cekici bolum Minecraft'ta live_loop kullanabilmektir! Bilmeyenler icin, live_loop Sonic Pi'nin ozel diger programlama dillerinde olmayan ozelligidir. Birden fazla donguyu ayni anda calistirmaya ve bu donguleri calismanin ortasinda degistirmeye yarar. Cog guzlu ve eglencelidirler. Ben live_loops'u gece kuluplerinde music uretmek icin kullaniyorum. Fakat, bugun bir bunu hem muzik hem Minecraft icin kullanacagiz.
+Hadi baslayalim. Kodu calistirin ve karpuz izi birakmaya devam edin. Simdi, kodu durdurmadan :melon'u :brick ile degistirip Run'a tiklayin. Bakin, artik tugladan bir iz birakiyorsunuz. Ne kadar kolaydi degil mi? Yaninda da muzik calsin ister miziniz? Kolay. Bunu deneyin:
 ```
 live_loop :bass_trail do
   tick
@@ -234,15 +148,10 @@ live_loop :bass_trail do
   sleep 0.125
 end 
 ```
-Simdi, bu calarken kodu degistirmeye baslayin. Blok tiplerini degistirin - :water,
-:grass veya en sevdiginiz blogu deneyin. Bir de, cutoff degerini 70'ten 80'e ve
-sonra 100'e degistirmeyi deneyin. Eglenceli degil mi?
+Simdi, bu calarken kodu degistirmeye baslayin. Blok tiplerini degistirin - :water, :grass veya en sevdiginiz blogu deneyin. Bir de, cutoff degerini 70'ten 80'e ve sonra 100'e degistirmeyi deneyin. Eglenceli degil mi?
 
 ***Herseyi Bir Araya Getirmek***
-Hadi gordugumuz herseyi birlestirip biraz sihir yapalim. Isinlanma yetenegi ile
-block yerlestirmeyi ve muzigi birlesitip bir Minecraft Muzik Videosu yapalim.
-Herseyi anlamazsaniz merak etmeyin, sadece bu kodu yazin ve icindeki degerlerle
-oynayin. Iyi eglenceler ve sonra gorusuruz...
+Hadi gordugumuz herseyi birlestirip biraz sihir yapalim. Isinlanma yetenegi ile block yerlestirmeyi ve muzigi birlesitip bir Minecraft Muzik Videosu yapalim. Herseyi anlamazsaniz merak etmeyin, sadece bu kodu yazin ve icindeki degerlerle oynayin. Iyi eglenceler ve sonra gorusuruz...
 ```
 live_loop :note_blocks do
   mc_message "This is Sonic Minecraft"
@@ -276,6 +185,75 @@ end
 ## A.10 Control
 ## A.11 Tick Tock
 ## A.12 Sample Slicing
+***Ornek Dilimleme***
+Bolum 3'te nasil Amen Break i donguye sokcagimizi, genisletecegimizi ve filtreleyecegimizi gorduk. Bu rehberde bunu bir adim ileri alacagiz ve nasil dilimleyecegimizi, dilimleri karistiracagimizi ve geri birlestirecegimizi gorecegiz. Eger bu size sira disi geliyorsa merak etmeyin, yakinda hepsi aciklancak ve siz guclu yeni bir canli kodlama aracini kullanmada ustalascaksiziniz.
+
+***Data Seklinde Ses***
+Baslamadan once, orneklerle calismayi anlamayi deneyelim. Simdiye kadar siz Sonic Pi'nin guclue ornekleyicisiyle oynadiniz. Yoksa, simdi kadar iyi bir zaman yok! Rasberry Pi'nizi baslatin, Sonic Pi'yi baslatin, yebi bir sayfaya bu kodlari yazip calistirin, davul vuruslari duyacaksiniz:
+```
+sample :loop_amen 
+```
+Bir ses kaydi basitce data olarak gosterilir - -1 ile 1 arasindaki ses dalgalasinin uc noktalarini belirten bircok sayi. Eger bu sayilari sirasiyle calarsak orijinal sesi uretiriz, Fakar, bizi bunlarin yerini degistirip kullanmaktan ali koyan ne var? Ornekler nasil kaydedilmistir? Aslinda sesin fizigini anlayinca cok basit. Bir ses olusturduguns - ornegin bir davula vurmak, ses havada su dalgalari gibi hareket eder. Bu dalgalar kulagina ulastiginda, kulakdavulun buna es hareket eder ve bu hareketleri duydugumuz sese cevirir. Eger bu sesi kaydetmek ve tekrar oynatmak istiyorsak, bu dalgalari yakalamanin, saklamanin ve tekrar olusturmanin bir yoluna ihtiyacimiz var. Bunun bir yolu bir kulakzari gibi calisan mikrofonu  kullanmak. Mikrofon bu dalgalari kucuk elektrik sinyallerine cevirir ve bu sinyallerin saniyede kac kere gerceklestigine bakilir. Bu olcumler -1 ile 1 arasindaki sayilarla kaydedilir.
+Eger biz sesi gorsellestirseydin, basit bir grafik ortaya cikardi ve x ekseni zamani, y ekseni ise -1 ile 1 arasinda mikrofonun konumunu belirtirdi. Buna ornek bir grafigi diagramin ustunde gorebilirsiniz.
+
+***Bir Ornegin Bir Parcasini Oynatmak***
+Peki, Sonic Pi yi bir ornegi farkli bir duzende oynatmak icin nasil kodlariz? Bu soruyu yanitlamak icin sample icin start: ve finish: optlarina bakmamiz gerek. Bunlar oynicak urunumuzun baslangic ve bitis noktalarini kontrol etmemizi sagliyor. Bu ikisi icin de deger olarak 1 ve 9 kullanilir, 0 baslangici 1 de sonu belirtir. Yani, Amen Break'in ilk yarisini oynatmak icin finish:'e 0.5 degerini vermeliyiz:
+```
+sample :loop_amen, finish: 0.5
+```
+Bir start: degeri ekleyerek daha da kucuk parcalari oynatabiliriz:
+```
+sample :loop_amen, start: 0.25, finish: 0.5
+```
+Bir finish: optunu start: optundan once koyabilirsiniz, bu durumda parca tersten oynar.
+```
+sample :loop_amen, start: 0.5, finish: 0.25
+```
+
+***Ornekleri Tekrar Duzenlemek***
+Artik bir ornegin basitce bir sayi listesi oldugunu bildigimize gore bu parcalari istedigimi sirada ve uzunlukta oynatabiliriz.
+Hadi Amen Break'i alip onu 8 esit parcaya bolelim ve parcalarin yerlerini karistiralim. Diagrama bakin: en ustte A) orijinal ornegin grafigini gosteriyor. Bunu 8 parcaya bolmek bize B)yi verir - her parca kolay gozuksun diye farkli bi renkte. Son olarak C) bize parcalarin sirasinin karistirilmis halini verir. Bu sonucu oynatabiliriz ve bize yeni bir tempo verir. Hadi bunu yapan koda bakalim:
+```
+live_loop :beat_slicer do
+  slice_idx = rand_i(8)
+  slice_size = 0.125
+  s = slice_idx * slice_size
+  f = s + slice_size
+  sample :loop_amen, start: s, finish: f
+  sleep sample_duration :loop_amen, start: s, finish: f
+end 
+```
+1. Rastgele bir parca seciyoruz 0'dan 7'ye ve onu oynatiyoruz. Bunu yapan Sonic Pi fonksiyonu: ran_i(8). Sonra biz bu parcayi slice_idx degiskeninde sakliyoruz.
+2. slice_size'i 1/8 olarak tanimliyoruz. slice_size, slice_idx'i 0'dan 1'e bir degere cevirmek icin gerekli ki start: icin kullanabilelim.
+3. Baslangic pozisyonu s'i slice_idx'i slice_size'a bolerek hesapliyoruz.
+4. Bitis pozisyonu f'i slice_size ile s'i toplayarak hesapliyoruz.
+5. Ornek parcayi simdi s ve f degerlerini start: ve finish: optlarina koyarak oynatabiliriz.
+6. Bir sonraki parcayi oynatmadan once ne kadar sleep olmasi gerektigini belirlemeliyiz, sleep parca boyutu kadar olmalidir. Sonic Pi bunun icin sample_duration fonksiyona sahip, bu fonksiyon sample'i opt alir ve parcanin start: ve finish: arasindaki suresini verir.
+7. Bu kodu live_loop icine aliyoruz ki yeni parcalar oynatmaya devam edebilelim.
+
+***Herseyi Bir Araya Getirmek***
+Hadi ogrendigimiz herseyi bu rastgele parcalanmis ornekleri bass ile oynatcak bir kod yazmak icin birlestirelim. Simdi sira sizde -alttaki kodu alin ve onu ne yonde goturebileceginizi deneyin...
+```
+live_loop :sliced_amen do
+  n = 8
+  s =  line(0, 1, steps: n).choose
+  f = s + (1.0 / n)
+  sample :loop_amen, beat_stretch: 2, start: s, finish: f
+  sleep 2.0  / n
+end
+
+live_loop :acid_bass do
+  with_fx :reverb, room: 1, reps: 32, amp: 0.6 do
+    tick
+    n = (octs :e0, 3).look - (knit 0, 3 * 8, -4, 3 * 8).look
+    co = rrand(70, 110)
+    synth :beep, note: n + 36, release: 0.1, wave: 0, cutoff: co
+    synth :tb303, note: n, release: 0.2, wave: 0, cutoff: co
+    sleep (ring 0.125, 0.25).look
+  end
+end
+```
+
 ## A.13 Code a Probabilistic Sequencer
 ## A.14 Amplitude Modulation
 ## A.15 Five Live Coding Techniques
