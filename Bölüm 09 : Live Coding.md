@@ -31,7 +31,7 @@ Burada elimizde olan şey 50 notasını çalıp 1 vuruş susan bir fonksiyondur.
 
 Eğer bu kodu çalıştırırsanız 50 notasını tekrar tekrar çaldığını duyacaksınız.
 
-## İşleri değiştirmek:
+## İşleri Değiştirmek:
 İşte burası eğlencenin başladığı kısım. Kod halihazırda çalınırken 50 değerini başka bir sayıyla değiştirin, mesela 55, daha sonra yeniden çalıştır butonuna basın. İnanılmaz! Değişti! Hem de canlı olarak!
 
 Çalmakta olanın üzerine yeni bir ses tabaksı eklemedi çünkü isimlendirilmiş kod parçalar kullandığımızdan bu ismi sadece eşsiz bir kod parçasına vermemize izin veriyor. Biz my_sound’a yeniden bir tanım verdik. :looper kodu döngüdeyken basitçe yeni bir tanım atandı.
