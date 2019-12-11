@@ -105,16 +105,16 @@ Denemelerinize Sonic Pi ile neler yapabileceğinizi öğrenmeyi merak kadar deva
 E hadi o zaman ne bekliyorsunuz...
 
 ## 1.2 Sonic Pi Arayüzü:
-Sonic Pi gayet basit bir kodlama arayüzüne sahiptir. Hadi keşvetmek için biraz vakit ayıralım.
+Sonic Pi gayet basit bir kodlama arayüzüne sahiptir. Hadi keşfetmek için biraz vakit ayıralım.
 
-**A-Oynatma Kontrolleri
-B-Editör Kontrolleri
-C-Bilgi ve Yardım
-D-Kodlama Editörü
-E-Tercih paneli
-F-Jurnal Gösterimi
-G-Yardım Sistemi
-H-Dalga Gösterimi**
+**A-Oynatma Kontrolleri**
+**B-Editör Kontrolleri**
+**C-Bilgi ve Yardım**
+**D-Kodlama Editörü**
+**E-Tercih paneli**
+**F-Jurnal Gösterimi**
+**G-Yardım Sistemi**
+**H-Dalga Gösterimi**
 
 ###### A. Oynatma Kontrolleri:
 Bu pembe butonlar sesleri başlatıp durdurmak için ana kontrollerdir. Kod Editöründeki kodu oynatmak için bir 
