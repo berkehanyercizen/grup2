@@ -4,6 +4,131 @@
 ## A.03 coded beats
 ## A.04 Synth Riffs
 ## A.05 Acid Bass
+***Asit Bas***
+Elektronik dans gecmisine kucuk Roland TB-303 sentezleyicisinin devasa etkisini
+gormeden bakmak olanaksizdir. Bu klasik gicirdayan ve gurultulu TB-303 bas
+riffleri erken Cikago Ev sahnesinden yeni Plastikman, Squarepusher ve Aphex
+Twin gibi elektronik artistlere kadar duyuldu.
+Rolan hicbir zaman TB-303'un dans muziginde kullanilmasini amaclamamisti. Bu
+orijinal olarak gitaristlerin pratik yapmasina yardim icin olusturuldu. Instanlarin
+onlari eslik edebilcekleri baslari calmak icin kullanilacagi dusunuluyordu. Ne
+yazik ki birkac problem vardi: bunlar programlamak icin cok kucutu, bir bas gitarin
+yerini tutabilecek kadar iyi selseri yoktu ve cok pahaliydilar. Kayiplarini
+kaybetmek icin, Roland 10,000 urun satildiktan sonra bunlarin uretimini durdurdu
+ve birkac yil boyunca gitaristlerin raflarinda durduktan sonra ikinci el
+magzalarinda gorulmeye baslandilar. Bu terk edilmis TB-303'ler onlari Roland'in
+tahmin bile edemedigi yeni sesler uretecek yeni jenerasyonlar tarafindan
+kesfedilmeyi bekliyordu. Asit Ev boylece dogdu.
+Su anda bir orijinal TB-303 bulmanin zor olmasina ragmen, sunu duymaktan mutlu
+olacaksiniz ki kendi Rasberry Pi'nizi Sonic Pi kullanarak bir taneye donusturebilirsiniz.
+Sonic Pi yi calistirin, icine bu kodu atin ve "Run" a basin:
+```
+use_synth :tb303
+play :e1
+```
+Aninda asit bas! Hadi oynayalim…
+
+***Bas'i Bastir***
+Oncelike, hadi canli bir arpej yapici olusturalim. Son rehberde rifflerin nasil
+birbir isaretledigimiz ve sona geldigimizde tekrar ettigimiz
+ bir nota halkasi oldugunu gorduk. Hadi bunu yapan canli bir dongu yazalim:
+```
+use_synth :tb303
+live_loop :squelch do
+  n = (ring :e1, :e2, :e3).tick
+  play n, release: 0.125, cutoff: 100, res: 0.8, wave: 0
+  sleep 0.125
+end 
+```
+Her satira bakalim.
+1. Ilk satirda varsayilan sentezi tb303'e use_synth fn yardimiyla ceviriyoruz.
+2. Ikinci satirda :squelch isimli, tekrar tekrar doncek bir dongu yaratiyoruz.
+3. Ucuncu satirda riff'imizi yaratiyoruz - .tick ile birbir isaretledigimiz
+bir nota halkasi. n'i anlik notayi belirmesi icin tanimliyoruz. Esittir isareti
+sadece sagdaki degeri soldaki isime atamaya yariyor. Bu her dongude farkli
+olacak. Ilk dongude n'e :e1, ikinci dongude :e2, sonra :e3 ve sonra tekrar
+:e1 atancak ve boyle sonsuza kadar gitcek.
+4. Dorduncu satirda :tb303 sentezini tetikliyoruz. Burda birkac onemli opt
+kullaniyoruz: release:, cutoff:, res: ve wave:.
+5. Besinci satir bizim sleep'imiz - donguye her donguyu 0.125 saniyede bir kere
+donmesini yani saniyede 8 kere, 60 BPM ile donmesini soyluyoruz.
+6. Altinci satir dongunun end'i. Bu Sonic Pi ye dongunun sonunun nerde oldugunu
+soyluyor.
+Siz ne oldugunu anlamaya ugrasirken, kodu yukari yazin ve calistirin. :tb303'un
+basladigini duymalisiniz. Simdi, canli kodlamaya baslayalim.
+Dongu hala aktif ike, cutoff:'u 110'a degistirin ve Run'a basin. Sesin biraz
+daha kaba ve baskin oldugunu duymalisiniz. 120 yazip tekrar Run'layin. Simdi
+130. Yuksek cutoff degerlerinin nasil daha delici ve yogun geldigini dinleyin.
+Son olarak, 80'e dusurun dinlenmek icin. Bunu istediginiz kadar tekrarlarin,
+merak etmeyin ben hala burda olcam...
+Oynamaya deger bir diger opt ise res:. Bu rezonansin seviyesini kontrol ediyor.
+Yuksek rezonans, asit bas seslerin bir karakteridir. Bi su anda res:'i 0.8'de
+tutuyoruz. Bunu 0.85'e cikarmayi deneyin, sonra 0.9, son olarak 0.95. 110 gibi
+bir cutoff'un farklari daha acik yaptigini fark edebilirsiniz. Son olarak
+abartin ve en yogun sesler icin 0.999 yazin. red bu kadar yuksekken, cutoff
+filtresinin o kadar rezonansini duyacaksiniz ki kendi seslerini yapmaya
+baslayacak.
+Son olarak buyuk bir etki icin wave: optunu 1'e degistirin. Bu bir arpej
+yapicinin secimidir. Varsayilan deger 0 bir testere disi dalgadir. 1 bir
+nabiz dalga ve 2 bir ucgen dalgadir.
+Tabiki de, notalari degistirerek degisik riffler deneyin. Ilk asit bas
+sentezinizle eglenin.
+***TB-303'un Analizi***
+Orijinal TB-303'un dizayni cok basit. Bu diyagramlardan gorebileceginiz gibi
+sadece 4 ana parca var.
+Ilki arpej yapici dalga - sesin hammaddeleri. Bu durumda bir kare dalgamiz var.
+Sonra kare dalganin zamanla amperini kontrol eden arpej yapicinin buyukluk
+kilifi var. Bunlar Sonic Pi'de attack:,decay:,sustain: ve release: optlari
+ve bunlarin seviyeleriyle erisilebilir. Daha cok bilgi isin Bolum 2.4'u
+okuyun. Biz sonra kilifli kare dalgamizi bir rezonans dusuk gecis filtresinden
+geciriyoruz. Bu yuksek frekanslari keser ve guzel rezonans effektini uygular.
+Burda eglence basliyor.  Bu filternin cutoff degeri de kendi kilifiyle kontrol
+ediliyor! Bu demek ki biz sesin tinisi uzerinde cok iyi kontrolumuz var demek.
+Hadi bakalim:
+```
+use_synth :tb303
+with_fx :reverb, room: 1 do
+  live_loop :space_scanner do
+    play :e1, cutoff: 100, release: 7, attack: 1, cutoff_attack: 4, cutoff_release: 4
+    sleep 8
+  end
+end 
+```
+Her standard kilif optu icin, :tb303 sentezinde bir cutoff_ karsiligi var. Yani,
+cutoff vurus suresini degistirmek icin cutoff_attack: optunu kullanabiliriz.
+Yukardaki kodu kopyalarin ve bos bir sayfaya yapistirip calistirin. Ilginc bir
+sesin ice ve disa sakidigini duyacaksiniz. Simdi oynamaya basladiniz. Simdi
+cutoff_attack: suresini 1 ve sonra 0.5'e cevirin. Simdi de 8'e.
+Herseyi bir :reverb FX'inden ekstra bir atmosfer icin gecirdigimize dikkat edin-
+baska bir FX deneyin ve calisiyormu bakin.
+
+***Herseyi Bir Araya Getirmek***
+Sonunda, bu rehberdeki fikirlerin birlesimiyle bestelenmis bir parca. Kopyalayip
+bos bir sayfaya yapistirin, bir sure dinleyin ve canli kodlamayla kendi
+degisikliklerinizi yapin. Ne kadar ilginc sesler yapabileceginizi test edin! 
+Sonra gorusmek uzere...
+```use_synth :tb303
+use_debug false
+ 
+with_fx :reverb, room: 0.8 do
+  live_loop :space_scanner do
+    with_fx :slicer, phase: 0.25, amp: 1.5 do
+      co = (line 70, 130, steps: 8).tick
+      play :e1, cutoff: co, release: 7, attack: 1, cutoff_attack: 4, cutoff_release: 4
+      sleep 8
+    end
+  end
+ 
+  live_loop :squelch do
+    use_random_seed 3000
+    16.times do
+      n = (ring :e1, :e2, :e3).tick
+      play n, release: 0.125, cutoff: rrand(70, 130), res: 0.9, wave: 1, amp: 0.8
+      sleep 0.125
+    end
+  end
+end
+```
 ## A.06 Musical Minecraft
 ## A.07 Bizet Beats
 ## A.08 Become a Minecraft VJ
