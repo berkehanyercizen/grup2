@@ -130,6 +130,146 @@ with_fx :reverb, room: 0.8 do
 end
 ```
 ## A.06 Musical Minecraft
+***Muziksel Minecraft***
+Merhaba ve tekrar hos geldiniz! Onceki rehberlerde biz Sonic Pi'nin muzik
+olanaklarına odaklanmistik - (Rasberry Pi'yi bir performansa hazir muzik
+aletine cevirmek). Simdiye kadar sunlari ogrendik:
+- Canli Kodlama - sesleri muzigin ortasinda degistirmek
+- Yuksek vuruslar kodlamak
+- Guzlu sentez onculeri olusturmak
+- Unlu RB-303 asit bass sesini tekrar olusturmak.
+Size gostereceğimiz daha cok sey var (bunlari gelecek baskılarda inceleyecegiz).
+Yine de, bu ay, Sonic Pi'nin muhtemelen farkında olmadıgınız yapabilecegi bir 
+seye bakalım: Minecraft'ı kontrol etmek.
+
+***Merhaba Minecraft Dunyasi***
+Tamam, hadi baslayalim. Raspberry Pi yi baslatin, Minecraft Pi yi baslatin ve
+yeni bir dunya yaratin. Simdi Sonic Pi yi acin ve iki programi da gorebileceginiz
+sekilde yerlestirin.
+Yeni bir sayfaya sunlari yazin:
+```
+mc_message "Hello Minecraft from Sonic Pi!" 
+```
+Bunu calistirin. Boom! Mesajiniz Minecraft'ta gozuktu! Ne kadar kolaydi degil
+mi? Simdi, okumayi bir an birakin ve kendi mesajlarinizla oynayin. Iyi eglenceler!
+
+***Sonic Isinlayici***
+Hadi biraz kesif yapalim. Standard secenek mouse ve klavye kullanarak yurumeye
+baslamaktir. Bu calisir, ama cok yavas ve sikici bir sekilde. Bir isinlanma
+makinemiz olsaydi cok daha iyi olurdu. Sonic Pi sayesinde, var. Sunu deneyin:
+```
+mc_teleport 80, 40, 100
+```
+Bu baya yuksek oldu! Eger ucuyor modunda degilsen burdan zemine kadar duserdin.
+Eger bosluk tusuna cift tiklarsan ucus moduna girebilirsin, bunu yaptitan sonra
+tekrar isinlar, oldugun yerde suzuluyor olcaksin.
+Simdi, bu sayilar ne demek? 3 sayimiz var ve bunlar gitmek istedigimiz yerin
+kordinatlarini belirtiyor. Bu sayilara sirasiyla x, y, z isimleri verebiliriz:
+- x: Ne kadar sol veya sag olmak istedigimiz (80)
+- y: Ne kadar yuksekte olmak istedigimiz (40)
+- x: Ne kadar ileri veya geri olmak istedigimiz (100)
+Bu degerleri degistirerek dunyada heryere isinlanabiliriz. Deneyin! Baska sayilar
+girin ve nereye vardiginiza bakin. Eger ekran kararisa bu yer alrinda veya bir
+dagin icinde oldugunuz anlamina geliyor. Daha yuksek bir y degeri girin bu
+durumda. Sevceginiz bir yer bulana kadar kesif yapmaya devam edin...
+Su ana kadarki fikirleri kullanarak, hadi guzel bir isinlanma sesi cikaran bir
+Sonic Isinlayici yapalim.
+```
+mc_message "Preparing to teleport...."
+sample :ambi_lunar_land, rate: -1
+sleep 1
+mc_message "3"
+sleep 1
+mc_message "2"
+sleep 1
+mc_message "1"
+sleep 1
+mc_teleport 90, 20, 10
+mc_message "Whoooosh!" 
+```
+***Sihirli Bloklar***
+Simdi guzel bir konum buldugunuza gore, hadi insa etmeye baslayalim. Alisik
+oldugunuz seyi yapip farenizle bloklari yerlestirmeye baslayabilirsiniz. Veya
+Sonic Pi nin sihirini kullanabilirsiniz. Sunu deneyin:
+```
+x, y, z = mc_location
+mc_set_block :melon, x, y + 5, z 
+```
+Yukari bakin! Havada bir karpuz var! Bir an durup koda bakin. Ne yaptik? Ilk
+satirda Steve'in konumunu alip x, y ve z degiskenlerine atadik. Bunlar
+bahsettigimiz kordinatlara karsilik geliyor. Bunlari mc_set_block'ta kullanip
+istedigimiz kordinata istedigimiz blogu yerlestirebildik. Havaya yerlestirmek
+icin y degerine 5 ekledik. Hadi bunlardan uzun bir sira yapalim:
+```
+live_loop :melon_trail do
+  x, y, z = mc_location
+  mc_set_block :melon, x, y-1, z
+  sleep 0.125
+end 
+```
+Simdi Minecraft'a atla, ucus modunda oldugundan emin ol ve etrafta dolas. Arkana
+bakarsan uzun bir karpuz sirasi gorceksin!
+
+***Minecraft'i Canli Kodlamak***
+Bu rehberi son birkac aydir takip ettiysenin buyuk ihtimal coktan hayrete dusmussunuzdur.
+Karpuz izi cok etkileyiciydi, ama en ilgi cekici bolum Minecraft'ta live_loop
+kullanabilmektir! Bilmeyenler icin, live_loop Sonic Pi'nin ozel diger programlama
+dillerinde olmayan ozelligidir. Birden fazla donguyu ayni anda calistirmaya ve
+bu donguleri calismanin ortasinda degistirmeye yarar. Cog guzlu ve eglencelidirler.
+Be live_loops'u gece kuluplerinde music uretmek icin kullaniyorum. Fakat, bugun
+bir bunu hem muzik hem Minecraft icin kullanacagiz.
+Hadi baslayalim. Kodu calistirin ve karpuz izi birakmaya devam edin. Simdi, kodu
+durdurmadan :melon'u :brick ile degistirip Run'a tiklayin. Bakin, artik tugladan
+bir iz birakiyorsunuz. Ne kadar kolaydi degil mi? Yaninda da muzik calsin
+ister miziniz? Kolay. Bunu deneyin:
+```
+live_loop :bass_trail do
+  tick
+  x, y, z = mc_location
+  b = (ring :melon, :brick, :glass).look
+  mc_set_block b, x, y -1, z
+  note = (ring :e1, :e2, :e3).look
+  use_synth :tb303
+  play note, release: 0.1, cutoff: 70
+  sleep 0.125
+end 
+```
+Simdi, bu calarken kodu degistirmeye baslayin. Blok tiplerini degistirin - :water,
+:grass veya en sevdiginiz blogu deneyin. Bir de, cutoff degerini 70'ten 80'e ve
+sonra 100'e degistirmeyi deneyin. Eglenceli degil mi?
+
+***Herseyi Bir Araya Getirmek***
+Hadi gordugumuz herseyi birlestirip biraz sihir yapalim. Isinlanma yetenegi ile
+block yerlestirmeyi ve muzigi birlesitip bir Minecraft Muzik Videosu yapalim.
+Herseyi anlamazsaniz merak etmeyin, sadece bu kodu yazin ve icindeki degerlerle
+oynayin. Iyi eglenceler ve sonra gorusuruz...
+```
+live_loop :note_blocks do
+  mc_message "This is Sonic Minecraft"
+  with_fx :reverb do
+    with_fx :echo, phase: 0.125, reps: 32 do
+      tick
+      x = (range 30, 90, step: 0.1).look
+      y = 20
+      z = -10
+      mc_teleport x, y, z
+      ns = (scale :e3, :minor_pentatonic)
+      n = ns.shuffle.choose
+      bs = (knit :glass, 3, :sand, 1)
+      b = bs.look
+      synth :beep, note: n, release: 0.1
+      mc_set_block b, x+20, n-60+y, z+10
+      mc_set_block b, x+20, n-60+y, z-10
+      sleep 0.25
+    end
+  end
+end
+
+live_loop :beats do
+  sample :bd_haus, cutoff: 100
+  sleep 0.5
+end
+```
 ## A.07 Bizet Beats
 ## A.08 Become a Minecraft VJ
 ## A.09 Randomisation
