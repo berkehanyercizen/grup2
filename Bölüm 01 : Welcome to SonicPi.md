@@ -136,7 +136,7 @@ Bu alan sizin kodlarınızı yazacağınız, besteleme/yorumlama yapacağınız 
 *Buraya yardım*
 
 ###### F. Jurnal Gösterimi:
-Kodunuzu çalıltırdığınızda programın ne yaptığıyla ilgili bilgiler log viewer'da gösterilir. Otomatik olarak, yarattığınız sesi, bilgisayar sesi ortama verdiği anda burada bir mesaj olarak görürsünüz. Bu sizin kodlarınızdaki sıkıntıları fark etmeniz ve çözmeniz için çok işe yarar bir şeydir, ayrıca kodunuzun ne yaptığını görebilmek kodunuzu anlamak için güzel bir yoldur.
+Kodunuzu çalıştırdığınızda programın ne yaptığıyla ilgili bilgiler log viewer'da gösterilir. Otomatik olarak, yarattığınız sesi, bilgisayar sesi ortama verdiği anda burada bir mesaj olarak görürsünüz. Bu sizin kodlarınızdaki sıkıntıları fark etmeniz ve çözmeniz için çok işe yarar bir şeydir, ayrıca kodunuzun ne yaptığını görebilmek kodunuzu anlamak için güzel bir yoldur.
 
 ###### G. Yardım Sistemi:
 Sonic Pi Arayüzü'nün en önemli parçalarından biri olan yardım sistemi ekranın alt kısmında belirir. Bu mavi "yardım" butonuna tıklayarak açıp kapatılabilir. Yardım sistemi Sonic Pi hakkında derinlemesine bilgi içerir (bu yönergeler, kullanabileceğiniz bir *synths* listesi, örnek müzikler, efektler ve kullanılabilecek olan fonksiyonların tam listesini size sunar.
