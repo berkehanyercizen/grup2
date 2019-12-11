@@ -147,10 +147,10 @@ Dalga gösterimi size duyduğunuz sesi görmenizde yardımcı olur. Bir saw dalg
 ## 1.3 Çalarak Öğrenme:
 Sonic Pi sizi hem hesaplama hem de müzik yaparken deneysel bir şekilde öğrenmeniz için güzel bir ortamdır. En önemlisi ise eğleniyor olmanız, eğer eğlenirseniz siz daha farkına varmadan kodlamayı ve beste yapmayı öğrenmiş olacaksınız.
 
-## HATA YOK
+## Hata Yok:
 Hazır bu konuya gelmişken size bir öneride bulunmama izin verin, benim yıllar boyu süren canlı müzik kodlama deneyimimden öğrendiğim şey: hatalarının değil, olanakların olduğudur. Bu jazz aleminde daha çok duyduğum bir cümle ancak canlı kodlayarak müzik yapmak için de eşit derecede geçerlidir. Ne kadar deneyimli olduğunuz hiç önemli değildir – daha yeni başlamış kişilerden bu işi uzun süredir yapan kişilere, ikiniz de beklenmedik sonuçları doğuran aynı kodları çalıştıracaksınız. Çok havalı gözüküyor – siz de kendinizi dalgaya kaptırın. Bununla birlikte, tamamen zır ve yersiz görünebilir ancak önemli olan bir şeyin olmuş olması değil, sizin onunla daha sonra ne yapacağınızdır. Sesi alın, oni işleyin ve harika bir şeye dönüştürün. Kalabalık çıldıracaktır.
 
-## BASİTTEN BAŞLAYIN
+## Basitten Başlayın:
 Siz öğreniyorken harika şeyleri hemen şimdi yapmak isteyeceksiniz ancak bu isteğinizi tutn ve onu gelecekte ulaşılacak bir hedef haline getirin. Şimdilik, yazabileceğiniz en basit şeyleri düşünün, bu sizin kafanızda düşündüğünüz o harika fikre ulaşmanız için attığınız küçük ve çok iyi hissettiren bir adım olacaktır. Küçük adımları öğrendikten sonra bun adımları uç uca ekleyip yürümeye çalışın, bu adımlarda oynamalar ve değişiklikler yaparak sizi nerelere götüreceğini ve size hangi yeni fikirleri vereceğini görün. Çok geçmeden eğlenmekle ve gerçekten gelişim göstermekle meşgul olacaksınız.
 
 Kendi yaptıklarınızı başkalarıyla paylaşmayı unutmayın!
